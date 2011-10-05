@@ -36,7 +36,7 @@ inline void write(Ostream& os, const T& t)
 {
     typedef csu::protobuf2json::json::writer::json_writer< Ostream > writer_t;
     writer_t w(os);
-    helper::helper_write(w, t);
+    helper::message_helper::write(w, &t);
 }
 
 } // namespace json

@@ -2,6 +2,7 @@
 #include <string>
 #include "Foo.pb.h"
 #include <protobuf2json/json/parser.hpp>
+#include <protobuf2json/json/writer.hpp>
 
 int main(int argc, const char *argv[])
 {
@@ -22,5 +23,8 @@ int main(int argc, const char *argv[])
     std::cout << "foo.bars_size() == \"" << 
         foo.bars_size() << "\"" << std::endl;
     
+    
+    protobuf2json::json::write(std::cout, foo);
+    std::cout << std::endl;
     return 0;
 }
