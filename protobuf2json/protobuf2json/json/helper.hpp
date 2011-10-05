@@ -206,7 +206,7 @@ struct message_helper : public helper_base
         if (!child_desc)
             throw "Error!";
 
-        if (child_desc->label() == pb::FieldDescriptor::LABEL_REPEATED)
+        if (child_desc->is_repeated())
             return new repeated_helper(*m_msg, child_desc);
 
         if (child_desc->type() == pb::FieldDescriptor::TYPE_MESSAGE)
@@ -214,6 +214,38 @@ struct message_helper : public helper_base
                 m_msg->GetReflection()->MutableMessage(m_msg, child_desc));
 
         return new field_helper(*m_msg, child_desc);
+    }
+
+    template< typename Writer >
+    static inline void write(Writer& w, 
+            const google::protobuf::Message * msg)
+    {
+        namespace pb = google::protobuf;
+
+        w.object_start();
+
+        const pb::Descriptor * desc = msg->GetDescriptor();
+        int count = desc->field_count();
+
+        for (int i = 0; i < count; i++) 
+        {
+            const pb::FieldDescriptor * field = desc->field(i);
+
+            w.new_string(field->name().c_str());
+
+            if (field->is_repeated())
+            {
+                w.array_start();
+                w.array_end();
+            }
+            else
+            {
+                // TODO
+                w.new_string("TODO");
+            }
+        }
+
+        w.object_end();
     }
 };
 
