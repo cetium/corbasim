@@ -81,6 +81,11 @@ struct field_helper : public helper_base
     {
     }
 
+    void new_bool(bool b)
+    {
+        m_msg.GetReflection()->SetBool(&m_msg, m_descriptor, b);
+    }
+
     void new_double(double d)
     {
         namespace pb = google::protobuf;
@@ -90,6 +95,10 @@ struct field_helper : public helper_base
             case pb::FieldDescriptor::CPPTYPE_DOUBLE:
                 m_msg.GetReflection()->SetDouble(&m_msg, m_descriptor, d);
                 break;
+            case pb::FieldDescriptor::CPPTYPE_FLOAT:
+                m_msg.GetReflection()->SetFloat(&m_msg, m_descriptor, d);
+                break;
+            // TODO integer types...
             default:
                 throw "Error!";
         }
@@ -97,7 +106,24 @@ struct field_helper : public helper_base
 
     void new_string(const std::string& d)
     {
+        namespace pb = google::protobuf;
+
         // TODO check desc type
+        // enums here too, as strings
+        if (m_descriptor->type() == pb::FieldDescriptor::TYPE_ENUM)
+        {
+            const pb::EnumDescriptor * desc = m_descriptor->enum_type();
+            if (!desc)
+                throw "Error!";
+
+            const pb::EnumValueDescriptor * value = desc->FindValueByName(d);
+            if (!value)
+                throw "Error!";
+
+            m_msg.GetReflection()->SetEnum(&m_msg, m_descriptor, value);
+        }
+        else
+
         m_msg.GetReflection()->SetString(&m_msg, m_descriptor, d);
     }
 };
@@ -114,6 +140,11 @@ struct repeated_helper : public helper_base
     {
     }
 
+    void new_bool(bool b)
+    {
+        m_msg.GetReflection()->AddBool(&m_msg, m_descriptor, b);
+    }
+
     void new_double(double d)
     {
         namespace pb = google::protobuf;
@@ -123,6 +154,10 @@ struct repeated_helper : public helper_base
             case pb::FieldDescriptor::CPPTYPE_DOUBLE:
                 m_msg.GetReflection()->AddDouble(&m_msg, m_descriptor, d);
                 break;
+            case pb::FieldDescriptor::CPPTYPE_FLOAT:
+                m_msg.GetReflection()->AddFloat(&m_msg, m_descriptor, d);
+                break;
+            // TODO integer types...
             default:
                 throw "Error!";
         }
@@ -130,8 +165,24 @@ struct repeated_helper : public helper_base
 
     void new_string(const std::string& d)
     {
+        namespace pb = google::protobuf;
+        
         // TODO check desc type
-        m_msg.GetReflection()->AddString(&m_msg, m_descriptor, d);
+        // enums here too, as strings
+        if (m_descriptor->type() == pb::FieldDescriptor::TYPE_ENUM)
+        {
+            const pb::EnumDescriptor * desc = m_descriptor->enum_type();
+            if (!desc)
+                throw "Error!";
+
+            const pb::EnumValueDescriptor * value = desc->FindValueByName(d);
+            if (!value)
+                throw "Error!";
+
+            m_msg.GetReflection()->AddEnum(&m_msg, m_descriptor, value);
+        }
+        else
+            m_msg.GetReflection()->AddString(&m_msg, m_descriptor, d);
     }
 
     helper_base* new_child();
