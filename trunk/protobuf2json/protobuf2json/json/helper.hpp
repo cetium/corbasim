@@ -123,8 +123,7 @@ struct field_helper : public helper_base
             m_msg.GetReflection()->SetEnum(&m_msg, m_descriptor, value);
         }
         else
-
-        m_msg.GetReflection()->SetString(&m_msg, m_descriptor, d);
+            m_msg.GetReflection()->SetString(&m_msg, m_descriptor, d);
     }
 };
 
