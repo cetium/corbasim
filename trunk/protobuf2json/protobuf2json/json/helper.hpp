@@ -75,11 +75,24 @@ struct field_helper : public helper_base
     google::protobuf::Message& m_msg;
     const google::protobuf::FieldDescriptor * m_descriptor;
 
-
     field_helper(google::protobuf::Message& msg,
             const google::protobuf::FieldDescriptor * desc) :
         m_msg(msg), m_descriptor(desc)
     {
+    }
+
+    void new_double(double d)
+    {
+        namespace pb = google::protobuf;
+
+        switch(m_descriptor->cpp_type())
+        {
+            case pb::FieldDescriptor::CPPTYPE_DOUBLE:
+                m_msg.GetReflection()->SetDouble(&m_msg, m_descriptor, d);
+                break;
+            default:
+                throw "Error!";
+        }
     }
 
     void new_string(const std::string& d)
@@ -89,18 +102,46 @@ struct field_helper : public helper_base
     }
 };
 
-/* TODO
 struct repeated_helper : public helper_base
 {
-    ...
+    google::protobuf::Message& m_msg;
+    const google::protobuf::FieldDescriptor * m_descriptor;
+
+
+    repeated_helper(google::protobuf::Message& msg,
+            const google::protobuf::FieldDescriptor * desc) :
+        m_msg(msg), m_descriptor(desc)
+    {
+    }
+
+    void new_double(double d)
+    {
+        namespace pb = google::protobuf;
+
+        switch(m_descriptor->cpp_type())
+        {
+            case pb::FieldDescriptor::CPPTYPE_DOUBLE:
+                m_msg.GetReflection()->AddDouble(&m_msg, m_descriptor, d);
+                break;
+            default:
+                throw "Error!";
+        }
+    }
+
+    void new_string(const std::string& d)
+    {
+        // TODO check desc type
+        m_msg.GetReflection()->AddString(&m_msg, m_descriptor, d);
+    }
+
+    helper_base* new_child();
 };
-*/
 
 struct message_helper : public helper_base
 {
-    google::protobuf::Message& m_msg;
+    google::protobuf::Message* m_msg;
 
-    message_helper(google::protobuf::Message& msg) :
+    message_helper(google::protobuf::Message* msg) :
         m_msg(msg)
     {
     }
@@ -110,22 +151,37 @@ struct message_helper : public helper_base
         namespace pb = google::protobuf;
 
         const pb::FieldDescriptor * child_desc = 
-            m_msg.GetDescriptor()->FindFieldByName(name);
+            m_msg->GetDescriptor()->FindFieldByName(name);
 
         if (!child_desc)
             throw "Error!";
 
         if (child_desc->label() == pb::FieldDescriptor::LABEL_REPEATED)
-            throw "Error!";
+            return new repeated_helper(*m_msg, child_desc);
 
-        return new field_helper(m_msg, child_desc);
+        if (child_desc->type() == pb::FieldDescriptor::TYPE_MESSAGE)
+            return new message_helper(
+                m_msg->GetReflection()->MutableMessage(m_msg, child_desc));
+
+        return new field_helper(*m_msg, child_desc);
     }
 };
+
+helper_base * repeated_helper::new_child()
+{
+    namespace pb = google::protobuf;
+
+    if (m_descriptor->type() == pb::FieldDescriptor::TYPE_MESSAGE)
+        return new message_helper(
+            m_msg.GetReflection()->AddMessage(&m_msg, m_descriptor));
+
+    return new repeated_helper(m_msg, m_descriptor);
+}
 
 template < typename Message >
 helper_base * create_helper(Message& m)
 {
-    return new message_helper(m);
+    return new message_helper(&m);
 }
 
 } // namespace helper
