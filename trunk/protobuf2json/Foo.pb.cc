@@ -2,6 +2,9 @@
 
 #define INTERNAL_SUPPRESS_PROTOBUF_FIELD_DEPRECATION
 #include "Foo.pb.h"
+
+#include <algorithm>
+
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -190,7 +193,7 @@ bool Foo_Bar::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &dou_)));
-          _set_bit(0);
+          set_has_dou();
         } else {
           goto handle_uninterpreted;
         }
@@ -217,7 +220,7 @@ bool Foo_Bar::MergePartialFromCodedStream(
 void Foo_Bar::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // required double dou = 1;
-  if (_has_bit(0)) {
+  if (has_dou()) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(1, this->dou(), output);
   }
   
@@ -230,7 +233,7 @@ void Foo_Bar::SerializeWithCachedSizes(
 ::google::protobuf::uint8* Foo_Bar::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // required double dou = 1;
-  if (_has_bit(0)) {
+  if (has_dou()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(1, this->dou(), target);
   }
   
@@ -277,7 +280,7 @@ void Foo_Bar::MergeFrom(const ::google::protobuf::Message& from) {
 void Foo_Bar::MergeFrom(const Foo_Bar& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
+    if (from.has_dou()) {
       set_dou(from.dou());
     }
   }
@@ -322,7 +325,6 @@ void Foo_Bar::Swap(Foo_Bar* other) {
 
 // -------------------------------------------------------------------
 
-const ::std::string Foo::_default_text_;
 #ifndef _MSC_VER
 const int Foo::kTextFieldNumber;
 const int Foo::kTextRepeatedFieldNumber;
@@ -345,7 +347,7 @@ Foo::Foo(const Foo& from)
 
 void Foo::SharedCtor() {
   _cached_size_ = 0;
-  text_ = const_cast< ::std::string*>(&_default_text_);
+  text_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -354,7 +356,7 @@ Foo::~Foo() {
 }
 
 void Foo::SharedDtor() {
-  if (text_ != &_default_text_) {
+  if (text_ != &::google::protobuf::internal::kEmptyString) {
     delete text_;
   }
   if (this != default_instance_) {
@@ -383,8 +385,8 @@ Foo* Foo::New() const {
 
 void Foo::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (_has_bit(0)) {
-      if (text_ != &_default_text_) {
+    if (has_text()) {
+      if (text_ != &::google::protobuf::internal::kEmptyString) {
         text_->clear();
       }
     }
@@ -469,7 +471,7 @@ bool Foo::MergePartialFromCodedStream(
 void Foo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string text = 1;
-  if (_has_bit(0)) {
+  if (has_text()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->text().data(), this->text().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
@@ -501,7 +503,7 @@ void Foo::SerializeWithCachedSizes(
 ::google::protobuf::uint8* Foo::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // optional string text = 1;
-  if (_has_bit(0)) {
+  if (has_text()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->text().data(), this->text().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
@@ -588,7 +590,7 @@ void Foo::MergeFrom(const Foo& from) {
   text_repeated_.MergeFrom(from.text_repeated_);
   bars_.MergeFrom(from.bars_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
+    if (from.has_text()) {
       set_text(from.text());
     }
   }
