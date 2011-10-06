@@ -1,4 +1,10 @@
 message Foo {
+
+    enum MyEnum {
+        HI = 0;
+        BYE = 2;
+    }
+
     message Bar {
         required double dou = 1;
         optional string text = 2;
@@ -9,5 +15,6 @@ message Foo {
 
     repeated Bar bars = 3;
 
+    required MyEnum ee = 4;
 }
 

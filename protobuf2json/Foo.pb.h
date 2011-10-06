@@ -33,6 +33,25 @@ void protobuf_ShutdownFile_Foo_2eproto();
 class Foo;
 class Foo_Bar;
 
+enum Foo_MyEnum {
+  Foo_MyEnum_HI = 0,
+  Foo_MyEnum_BYE = 2
+};
+bool Foo_MyEnum_IsValid(int value);
+const Foo_MyEnum Foo_MyEnum_MyEnum_MIN = Foo_MyEnum_HI;
+const Foo_MyEnum Foo_MyEnum_MyEnum_MAX = Foo_MyEnum_BYE;
+const int Foo_MyEnum_MyEnum_ARRAYSIZE = Foo_MyEnum_MyEnum_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* Foo_MyEnum_descriptor();
+inline const ::std::string& Foo_MyEnum_Name(Foo_MyEnum value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    Foo_MyEnum_descriptor(), value);
+}
+inline bool Foo_MyEnum_Parse(
+    const ::std::string& name, Foo_MyEnum* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<Foo_MyEnum>(
+    Foo_MyEnum_descriptor(), name, value);
+}
 // ===================================================================
 
 class Foo_Bar : public ::google::protobuf::Message {
@@ -190,6 +209,30 @@ class Foo : public ::google::protobuf::Message {
   
   typedef Foo_Bar Bar;
   
+  typedef Foo_MyEnum MyEnum;
+  static const MyEnum HI = Foo_MyEnum_HI;
+  static const MyEnum BYE = Foo_MyEnum_BYE;
+  static inline bool MyEnum_IsValid(int value) {
+    return Foo_MyEnum_IsValid(value);
+  }
+  static const MyEnum MyEnum_MIN =
+    Foo_MyEnum_MyEnum_MIN;
+  static const MyEnum MyEnum_MAX =
+    Foo_MyEnum_MyEnum_MAX;
+  static const int MyEnum_ARRAYSIZE =
+    Foo_MyEnum_MyEnum_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor*
+  MyEnum_descriptor() {
+    return Foo_MyEnum_descriptor();
+  }
+  static inline const ::std::string& MyEnum_Name(MyEnum value) {
+    return Foo_MyEnum_Name(value);
+  }
+  static inline bool MyEnum_Parse(const ::std::string& name,
+      MyEnum* value) {
+    return Foo_MyEnum_Parse(name, value);
+  }
+  
   // accessors -------------------------------------------------------
   
   // optional string text = 1;
@@ -230,6 +273,13 @@ class Foo : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::Foo_Bar >*
       mutable_bars();
   
+  // required .Foo.MyEnum ee = 4;
+  inline bool has_ee() const;
+  inline void clear_ee();
+  static const int kEeFieldNumber = 4;
+  inline ::Foo_MyEnum ee() const;
+  inline void set_ee(::Foo_MyEnum value);
+  
   // @@protoc_insertion_point(class_scope:Foo)
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -239,11 +289,12 @@ class Foo : public ::google::protobuf::Message {
   static const ::std::string _default_text_;
   ::google::protobuf::RepeatedPtrField< ::std::string> text_repeated_;
   ::google::protobuf::RepeatedPtrField< ::Foo_Bar > bars_;
+  int ee_;
   friend void  protobuf_AddDesc_Foo_2eproto();
   friend void protobuf_AssignDesc_Foo_2eproto();
   friend void protobuf_ShutdownFile_Foo_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -439,6 +490,23 @@ Foo::mutable_bars() {
   return &bars_;
 }
 
+// required .Foo.MyEnum ee = 4;
+inline bool Foo::has_ee() const {
+  return _has_bit(3);
+}
+inline void Foo::clear_ee() {
+  ee_ = 0;
+  _clear_bit(3);
+}
+inline ::Foo_MyEnum Foo::ee() const {
+  return static_cast< ::Foo_MyEnum >(ee_);
+}
+inline void Foo::set_ee(::Foo_MyEnum value) {
+  GOOGLE_DCHECK(::Foo_MyEnum_IsValid(value));
+  _set_bit(3);
+  ee_ = value;
+}
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -446,6 +514,10 @@ Foo::mutable_bars() {
 namespace google {
 namespace protobuf {
 
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Foo_MyEnum>() {
+  return ::Foo_MyEnum_descriptor();
+}
 
 }  // namespace google
 }  // namespace protobuf
