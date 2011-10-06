@@ -222,6 +222,7 @@ struct message_helper : public helper_base
     {
         namespace pb = google::protobuf;
         double d = 0.0;
+        bool b = false;
         std::string str;
 
         w.object_start();
@@ -257,9 +258,40 @@ struct message_helper : public helper_base
                             d = reflection->GetRepeatedDouble(*msg, field, j);
                             w.new_double(d);
                             break;
+                        case pb::FieldDescriptor::CPPTYPE_FLOAT:
+                            d = reflection->GetRepeatedFloat(*msg, field, j);
+                            w.new_double(d);
+                            break;
+                        case pb::FieldDescriptor::CPPTYPE_INT32:
+                            d = reflection->GetRepeatedInt32(*msg, field, j);
+                            w.new_double(d);
+                            break;
+                        case pb::FieldDescriptor::CPPTYPE_INT64:
+                            d = reflection->GetRepeatedInt64(*msg, field, j);
+                            w.new_double(d);
+                            break;
+                        case pb::FieldDescriptor::CPPTYPE_UINT32:
+                            d = reflection->GetRepeatedUInt32(*msg, field, j);
+                            w.new_double(d);
+                            break;
+                        case pb::FieldDescriptor::CPPTYPE_UINT64:
+                            d = reflection->GetRepeatedUInt64(*msg, field, j);
+                            w.new_double(d);
+                            break;
+                        case pb::FieldDescriptor::CPPTYPE_BOOL:
+                            b = reflection->GetRepeatedBool(*msg, field, j);
+                            w.new_bool(b);
+                            break;
                         case pb::FieldDescriptor::CPPTYPE_STRING:
                             str = reflection->GetRepeatedString(*msg, field, j);
                             w.new_string(str.c_str());
+                            break;
+                        case pb::FieldDescriptor::CPPTYPE_ENUM:
+                            {
+                                const pb::EnumValueDescriptor * value = 
+                                    reflection->GetRepeatedEnum(*msg, field, j);
+                                w.new_string(value->name().c_str());
+                            }
                             break;
                         default:
                             w.new_string("TODO");
@@ -287,9 +319,40 @@ struct message_helper : public helper_base
                         d = reflection->GetDouble(*msg, field);
                         w.new_double(d);
                         break;
+                    case pb::FieldDescriptor::CPPTYPE_FLOAT:
+                        d = reflection->GetFloat(*msg, field);
+                        w.new_double(d);
+                        break;
+                    case pb::FieldDescriptor::CPPTYPE_INT32:
+                        d = reflection->GetInt32(*msg, field);
+                        w.new_double(d);
+                        break;
+                    case pb::FieldDescriptor::CPPTYPE_INT64:
+                        d = reflection->GetInt64(*msg, field);
+                        w.new_double(d);
+                        break;
+                    case pb::FieldDescriptor::CPPTYPE_UINT32:
+                        d = reflection->GetUInt32(*msg, field);
+                        w.new_double(d);
+                        break;
+                    case pb::FieldDescriptor::CPPTYPE_UINT64:
+                        d = reflection->GetUInt64(*msg, field);
+                        w.new_double(d);
+                        break;
                     case pb::FieldDescriptor::CPPTYPE_STRING:
                         str = reflection->GetString(*msg, field);
                         w.new_string(str.c_str());
+                        break;
+                    case pb::FieldDescriptor::CPPTYPE_BOOL:
+                        b = reflection->GetBool(*msg, field);
+                        w.new_bool(b);
+                        break;
+                    case pb::FieldDescriptor::CPPTYPE_ENUM:
+                        {
+                            const pb::EnumValueDescriptor * value = 
+                                reflection->GetEnum(*msg, field);
+                            w.new_string(value->name().c_str());
+                        }
                         break;
                     default:
                         w.new_string("TODO");

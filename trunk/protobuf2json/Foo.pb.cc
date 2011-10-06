@@ -18,6 +18,7 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* Foo_Bar_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Foo_Bar_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* Foo_MyEnum_descriptor_ = NULL;
 
 }  // namespace
 
@@ -29,10 +30,11 @@ void protobuf_AssignDesc_Foo_2eproto() {
       "Foo.proto");
   GOOGLE_CHECK(file != NULL);
   Foo_descriptor_ = file->message_type(0);
-  static const int Foo_offsets_[3] = {
+  static const int Foo_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Foo, text_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Foo, text_repeated_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Foo, bars_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Foo, ee_),
   };
   Foo_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -61,6 +63,7 @@ void protobuf_AssignDesc_Foo_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Foo_Bar));
+  Foo_MyEnum_descriptor_ = Foo_descriptor_->enum_type(0);
 }
 
 namespace {
@@ -95,9 +98,11 @@ void protobuf_AddDesc_Foo_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\tFoo.proto\"d\n\003Foo\022\014\n\004text\030\001 \001(\t\022\025\n\rtext"
-    "_repeated\030\002 \003(\t\022\026\n\004bars\030\003 \003(\0132\010.Foo.Bar\032"
-    " \n\003Bar\022\013\n\003dou\030\001 \002(\001\022\014\n\004text\030\002 \001(\t", 113);
+    "\n\tFoo.proto\"\230\001\n\003Foo\022\014\n\004text\030\001 \001(\t\022\025\n\rtex"
+    "t_repeated\030\002 \003(\t\022\026\n\004bars\030\003 \003(\0132\010.Foo.Bar"
+    "\022\027\n\002ee\030\004 \002(\0162\013.Foo.MyEnum\032 \n\003Bar\022\013\n\003dou\030"
+    "\001 \002(\001\022\014\n\004text\030\002 \001(\t\"\031\n\006MyEnum\022\006\n\002HI\020\000\022\007\n"
+    "\003BYE\020\002", 166);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Foo.proto", &protobuf_RegisterTypes);
   Foo::default_instance_ = new Foo();
@@ -117,6 +122,27 @@ struct StaticDescriptorInitializer_Foo_2eproto {
 
 // ===================================================================
 
+const ::google::protobuf::EnumDescriptor* Foo_MyEnum_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return Foo_MyEnum_descriptor_;
+}
+bool Foo_MyEnum_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#ifndef _MSC_VER
+const Foo_MyEnum Foo::HI;
+const Foo_MyEnum Foo::BYE;
+const Foo_MyEnum Foo::MyEnum_MIN;
+const Foo_MyEnum Foo::MyEnum_MAX;
+const int Foo::MyEnum_ARRAYSIZE;
+#endif  // _MSC_VER
 const ::std::string Foo_Bar::_default_text_;
 #ifndef _MSC_VER
 const int Foo_Bar::kDouFieldNumber;
@@ -386,6 +412,7 @@ const ::std::string Foo::_default_text_;
 const int Foo::kTextFieldNumber;
 const int Foo::kTextRepeatedFieldNumber;
 const int Foo::kBarsFieldNumber;
+const int Foo::kEeFieldNumber;
 #endif  // !_MSC_VER
 
 Foo::Foo()
@@ -405,6 +432,7 @@ Foo::Foo(const Foo& from)
 void Foo::SharedCtor() {
   _cached_size_ = 0;
   text_ = const_cast< ::std::string*>(&_default_text_);
+  ee_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -447,6 +475,7 @@ void Foo::Clear() {
         text_->clear();
       }
     }
+    ee_ = 0;
   }
   text_repeated_.Clear();
   bars_.Clear();
@@ -505,6 +534,27 @@ bool Foo::MergePartialFromCodedStream(
           goto handle_uninterpreted;
         }
         if (input->ExpectTag(26)) goto parse_bars;
+        if (input->ExpectTag(32)) goto parse_ee;
+        break;
+      }
+      
+      // required .Foo.MyEnum ee = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_ee:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Foo_MyEnum_IsValid(value)) {
+            set_ee(static_cast< ::Foo_MyEnum >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(4, value);
+          }
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -551,6 +601,12 @@ void Foo::SerializeWithCachedSizes(
       3, this->bars(i), output);
   }
   
+  // required .Foo.MyEnum ee = 4;
+  if (_has_bit(3)) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      4, this->ee(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -585,6 +641,12 @@ void Foo::SerializeWithCachedSizes(
         3, this->bars(i), target);
   }
   
+  // required .Foo.MyEnum ee = 4;
+  if (_has_bit(3)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      4, this->ee(), target);
+  }
+  
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -601,6 +663,12 @@ int Foo::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->text());
+    }
+    
+    // required .Foo.MyEnum ee = 4;
+    if (has_ee()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->ee());
     }
     
   }
@@ -650,6 +718,9 @@ void Foo::MergeFrom(const Foo& from) {
     if (from._has_bit(0)) {
       set_text(from.text());
     }
+    if (from._has_bit(3)) {
+      set_ee(from.ee());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -667,6 +738,7 @@ void Foo::CopyFrom(const Foo& from) {
 }
 
 bool Foo::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000008) != 0x00000008) return false;
   
   for (int i = 0; i < bars_size(); i++) {
     if (!this->bars(i).IsInitialized()) return false;
@@ -679,6 +751,7 @@ void Foo::Swap(Foo* other) {
     std::swap(text_, other->text_);
     text_repeated_.Swap(&other->text_repeated_);
     bars_.Swap(&other->bars_);
+    std::swap(ee_, other->ee_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
