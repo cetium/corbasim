@@ -221,10 +221,13 @@ struct message_helper : public helper_base
             const google::protobuf::Message * msg)
     {
         namespace pb = google::protobuf;
+        double d = 0.0;
+        std::string str;
 
         w.object_start();
 
         const pb::Descriptor * desc = msg->GetDescriptor();
+        const pb::Reflection * reflection = msg->GetReflection();
         int count = desc->field_count();
 
         for (int i = 0; i < count; i++) 
@@ -236,12 +239,58 @@ struct message_helper : public helper_base
             if (field->is_repeated())
             {
                 w.array_start();
+                int times = reflection->FieldSize(*msg, field);
+
+                for (int j = 0; j < times; j++) 
+                {
+                    switch(field->cpp_type())
+                    {
+                        case pb::FieldDescriptor::CPPTYPE_MESSAGE:
+                            {
+                                const pb::Message& child_msg = 
+                                    reflection->GetRepeatedMessage(*msg, field, j);
+                                write(w, &child_msg);
+                            }
+                            break;
+                        case pb::FieldDescriptor::CPPTYPE_DOUBLE:
+                            d = reflection->GetRepeatedDouble(*msg, field, j);
+                            w.new_double(d);
+                            break;
+                        case pb::FieldDescriptor::CPPTYPE_STRING:
+                            str = reflection->GetRepeatedString(*msg, field, j);
+                            w.new_string(str.c_str());
+                            break;
+                        default:
+                            w.new_string("TODO");
+                            break;
+                    }
+                }
+
                 w.array_end();
             }
-            else
+            else if (!(field->is_optional() && !reflection->HasField(*msg, field)))
             {
-                // TODO
-                w.new_string("TODO");
+                switch(field->cpp_type())
+                {
+                    case pb::FieldDescriptor::CPPTYPE_MESSAGE:
+                        {
+                            const pb::Message& child_msg = 
+                                reflection->GetMessage(*msg, field);
+                            write(w, &child_msg);
+                        }
+                        break;
+                    case pb::FieldDescriptor::CPPTYPE_DOUBLE:
+                        d = reflection->GetDouble(*msg, field);
+                        w.new_double(d);
+                        break;
+                    case pb::FieldDescriptor::CPPTYPE_STRING:
+                        str = reflection->GetString(*msg, field);
+                        w.new_string(str.c_str());
+                        break;
+                    default:
+                        w.new_string("TODO");
+                        break;
+                }
             }
         }
 
