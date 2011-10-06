@@ -1,6 +1,7 @@
 message Foo {
     message Bar {
         required double dou = 1;
+        optional string text = 2;
     }
 
     optional string text = 1;

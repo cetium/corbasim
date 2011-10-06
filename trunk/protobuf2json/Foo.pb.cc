@@ -2,9 +2,6 @@
 
 #define INTERNAL_SUPPRESS_PROTOBUF_FIELD_DEPRECATION
 #include "Foo.pb.h"
-
-#include <algorithm>
-
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -49,8 +46,9 @@ void protobuf_AssignDesc_Foo_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Foo));
   Foo_Bar_descriptor_ = Foo_descriptor_->nested_type(0);
-  static const int Foo_Bar_offsets_[1] = {
+  static const int Foo_Bar_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Foo_Bar, dou_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Foo_Bar, text_),
   };
   Foo_Bar_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -97,9 +95,9 @@ void protobuf_AddDesc_Foo_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\tFoo.proto\"V\n\003Foo\022\014\n\004text\030\001 \001(\t\022\025\n\rtext"
+    "\n\tFoo.proto\"d\n\003Foo\022\014\n\004text\030\001 \001(\t\022\025\n\rtext"
     "_repeated\030\002 \003(\t\022\026\n\004bars\030\003 \003(\0132\010.Foo.Bar\032"
-    "\022\n\003Bar\022\013\n\003dou\030\001 \002(\001", 99);
+    " \n\003Bar\022\013\n\003dou\030\001 \002(\001\022\014\n\004text\030\002 \001(\t", 113);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Foo.proto", &protobuf_RegisterTypes);
   Foo::default_instance_ = new Foo();
@@ -119,8 +117,10 @@ struct StaticDescriptorInitializer_Foo_2eproto {
 
 // ===================================================================
 
+const ::std::string Foo_Bar::_default_text_;
 #ifndef _MSC_VER
 const int Foo_Bar::kDouFieldNumber;
+const int Foo_Bar::kTextFieldNumber;
 #endif  // !_MSC_VER
 
 Foo_Bar::Foo_Bar()
@@ -140,6 +140,7 @@ Foo_Bar::Foo_Bar(const Foo_Bar& from)
 void Foo_Bar::SharedCtor() {
   _cached_size_ = 0;
   dou_ = 0;
+  text_ = const_cast< ::std::string*>(&_default_text_);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -148,6 +149,9 @@ Foo_Bar::~Foo_Bar() {
 }
 
 void Foo_Bar::SharedDtor() {
+  if (text_ != &_default_text_) {
+    delete text_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -175,6 +179,11 @@ Foo_Bar* Foo_Bar::New() const {
 void Foo_Bar::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     dou_ = 0;
+    if (_has_bit(1)) {
+      if (text_ != &_default_text_) {
+        text_->clear();
+      }
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -193,7 +202,24 @@ bool Foo_Bar::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &dou_)));
-          set_has_dou();
+          _set_bit(0);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_text;
+        break;
+      }
+      
+      // optional string text = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_text:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_text()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->text().data(), this->text().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -220,8 +246,17 @@ bool Foo_Bar::MergePartialFromCodedStream(
 void Foo_Bar::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // required double dou = 1;
-  if (has_dou()) {
+  if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(1, this->dou(), output);
+  }
+  
+  // optional string text = 2;
+  if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->text().data(), this->text().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->text(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -233,8 +268,18 @@ void Foo_Bar::SerializeWithCachedSizes(
 ::google::protobuf::uint8* Foo_Bar::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // required double dou = 1;
-  if (has_dou()) {
+  if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(1, this->dou(), target);
+  }
+  
+  // optional string text = 2;
+  if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->text().data(), this->text().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->text(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -251,6 +296,13 @@ int Foo_Bar::ByteSize() const {
     // required double dou = 1;
     if (has_dou()) {
       total_size += 1 + 8;
+    }
+    
+    // optional string text = 2;
+    if (has_text()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->text());
     }
     
   }
@@ -280,8 +332,11 @@ void Foo_Bar::MergeFrom(const ::google::protobuf::Message& from) {
 void Foo_Bar::MergeFrom(const Foo_Bar& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_dou()) {
+    if (from._has_bit(0)) {
       set_dou(from.dou());
+    }
+    if (from._has_bit(1)) {
+      set_text(from.text());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -308,6 +363,7 @@ bool Foo_Bar::IsInitialized() const {
 void Foo_Bar::Swap(Foo_Bar* other) {
   if (other != this) {
     std::swap(dou_, other->dou_);
+    std::swap(text_, other->text_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -325,6 +381,7 @@ void Foo_Bar::Swap(Foo_Bar* other) {
 
 // -------------------------------------------------------------------
 
+const ::std::string Foo::_default_text_;
 #ifndef _MSC_VER
 const int Foo::kTextFieldNumber;
 const int Foo::kTextRepeatedFieldNumber;
@@ -347,7 +404,7 @@ Foo::Foo(const Foo& from)
 
 void Foo::SharedCtor() {
   _cached_size_ = 0;
-  text_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  text_ = const_cast< ::std::string*>(&_default_text_);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -356,7 +413,7 @@ Foo::~Foo() {
 }
 
 void Foo::SharedDtor() {
-  if (text_ != &::google::protobuf::internal::kEmptyString) {
+  if (text_ != &_default_text_) {
     delete text_;
   }
   if (this != default_instance_) {
@@ -385,8 +442,8 @@ Foo* Foo::New() const {
 
 void Foo::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_text()) {
-      if (text_ != &::google::protobuf::internal::kEmptyString) {
+    if (_has_bit(0)) {
+      if (text_ != &_default_text_) {
         text_->clear();
       }
     }
@@ -471,7 +528,7 @@ bool Foo::MergePartialFromCodedStream(
 void Foo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional string text = 1;
-  if (has_text()) {
+  if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->text().data(), this->text().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
@@ -503,7 +560,7 @@ void Foo::SerializeWithCachedSizes(
 ::google::protobuf::uint8* Foo::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // optional string text = 1;
-  if (has_text()) {
+  if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->text().data(), this->text().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
@@ -590,7 +647,7 @@ void Foo::MergeFrom(const Foo& from) {
   text_repeated_.MergeFrom(from.text_repeated_);
   bars_.MergeFrom(from.bars_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_text()) {
+    if (from._has_bit(0)) {
       set_text(from.text());
     }
   }

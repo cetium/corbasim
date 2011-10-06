@@ -234,10 +234,11 @@ struct message_helper : public helper_base
         {
             const pb::FieldDescriptor * field = desc->field(i);
 
-            w.new_string(field->name().c_str());
-
             if (field->is_repeated())
             {
+                // Field name
+                w.new_string(field->name().c_str());
+
                 w.array_start();
                 int times = reflection->FieldSize(*msg, field);
 
@@ -270,6 +271,9 @@ struct message_helper : public helper_base
             }
             else if (!(field->is_optional() && !reflection->HasField(*msg, field)))
             {
+                // Field name
+                w.new_string(field->name().c_str());
+
                 switch(field->cpp_type())
                 {
                     case pb::FieldDescriptor::CPPTYPE_MESSAGE:
