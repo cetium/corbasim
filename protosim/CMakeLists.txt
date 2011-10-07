@@ -27,7 +27,13 @@ add_definitions(-Wall)
 #     link_directories(${Boost_LIBRARY_DIRS})
 # endif(NOT Boost_FOUND)
 
+# Protobuf
+find_package(Protobuf REQUIRED)
+include_directories(${PROTOBUF_INCLUDE_DIRS})
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
+add_subdirectory(protosim)
 
 # Opciones de empaquetado
 set(CPACK_GENERATOR "TGZ")

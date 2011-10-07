@@ -35,7 +35,7 @@ ProtoMessageWidget::ProtoMessageWidget(
         const google::protobuf::FieldDescriptor * field = 
             m_descriptor->field(i);
 
-        layout->addWidget(new QLabel(field->name()), i, 0);
+        layout->addWidget(new QLabel(field->name().c_str()), i, 0);
     }
 
     setLayout(layout);
