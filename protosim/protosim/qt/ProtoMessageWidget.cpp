@@ -18,6 +18,8 @@
  */
 
 #include "ProtoMessageWidget.hpp"
+#include <protosim/qt/widgets.hpp>
+
 #include <google/protobuf/descriptor.h>
 
 using namespace protosim::qt;
@@ -37,6 +39,7 @@ ProtoMessageWidget::ProtoMessageWidget(
             m_descriptor->field(i);
 
         layout->addWidget(new QLabel(field->name().c_str()), i, 0);
+        layout->addWidget(create_widget_by_label(field), i, 1);
     }
 
     setLayout(layout);
