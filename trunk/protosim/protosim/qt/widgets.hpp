@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * ProtoMessageWidget.cpp
+ * widgets.hpp
  * Copyright (C) Cátedra SAES-UMU 2011 <catedra-saes-umu@listas.um.es>
  *
  * CORBASIM is free software: you can redistribute it and/or modify it
@@ -17,32 +17,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ProtoMessageWidget.hpp"
-#include <google/protobuf/descriptor.h>
+#ifndef PROTOSIM_QT_WIDGETS_HPP
+#define PROTOSIM_QT_WIDGETS_HPP
 
-using namespace protosim::qt;
+class QWidget;
 
-ProtoMessageWidget::ProtoMessageWidget(
-        const google::protobuf::Descriptor * descriptor,
-        QWidget * parent) :
-    QWidget(parent), m_descriptor(descriptor)
+namespace google 
 {
-    QGridLayout * layout = new QGridLayout;
-
-    int count = m_descriptor->field_count();
-
-    for (int i = 0; i < count; i++) 
-    {
-        const google::protobuf::FieldDescriptor * field = 
-            m_descriptor->field(i);
-
-        layout->addWidget(new QLabel(field->name().c_str()), i, 0);
-    }
-
-    setLayout(layout);
-}
-
-ProtoMessageWidget::~ProtoMessageWidget()
+namespace protobuf 
 {
-}
+
+class FieldDescriptor;
+
+} // namespace protobuf
+} // namespace google
+
+namespace protosim 
+{
+namespace qt 
+{
+
+QWidget * create_widget_by_label(
+        const google::protobuf::FieldDescriptor * field);
+
+QWidget * create_widget_by_type(
+        const google::protobuf::FieldDescriptor * field);
+
+} // namespace qt
+} // namespace protosim
+
+#endif /* PROTOSIM_QT_WIDGETS_HPP */
 

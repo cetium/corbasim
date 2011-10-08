@@ -21,7 +21,7 @@
 #define PROTOSIM_PROTOMESSAGEWIDGET_HPP
 
 #include <QtGui>
-#include <google/protobuf/descriptor.h>
+#include <protosim/protobuf_fwd.hpp>
 
 namespace protosim 
 {

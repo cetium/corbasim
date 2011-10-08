@@ -50,6 +50,7 @@ if(NOT DEFINED CORBASIM_DISABLE_UI)
 
     set(protosim_qt_EXPORTED_HEADERS
         qt/ProtoMessageWidget.hpp
+        qt/widgets.hpp
     )
 
     foreach(_header ${protosim_qt_EXPORTED_HEADERS})
@@ -62,7 +63,8 @@ if(NOT DEFINED CORBASIM_DISABLE_UI)
         qt/ProtoMessageWidget.hpp)
 
     set(protosim_qt_SRCS
-        qt/ProtoMessageWidget.cpp)
+        qt/ProtoMessageWidget.cpp
+        qt/widgets.cpp)
 
     set(protosim_qt_LIBS
         ${QT_LIBRARIES}
