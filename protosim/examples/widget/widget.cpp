@@ -1,7 +1,15 @@
 #include <iostream>
+#include <protosim/qt/ProtoMessageWidget.hpp>
+#include "Foo.pb.h"
 
-int main(int argc, const char *argv[])
+int main(int argc, char *argv[])
 {
+    QApplication app(argc, argv);
+
+    Foo foo;
+    protosim::qt::ProtoMessageWidget widget(foo.GetDescriptor());
     
-    return 0;
+    widget.show();
+
+    return app.exec();
 }
