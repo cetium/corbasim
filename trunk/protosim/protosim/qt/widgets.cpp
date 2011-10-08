@@ -50,6 +50,15 @@ QWidget * create_widget_by_label(
 QWidget * create_widget_by_type(
         const google::protobuf::FieldDescriptor * field)
 {
+    namespace pb = google::protobuf;
+
+    switch(field->cpp_type())
+    {
+        case pb::FieldDescriptor::CPPTYPE_MESSAGE:
+            // TODO
+        default:
+            break;
+    }
     return NULL;
 }
 
