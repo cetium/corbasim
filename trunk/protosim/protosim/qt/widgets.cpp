@@ -19,6 +19,7 @@
 
 #include "widgets.hpp"
 #include <protosim/qt/ProtoMessageWidget.hpp>
+#include <protosim/qt/FieldWidget.hpp>
 
 #include <google/protobuf/descriptor.h>
 
@@ -35,8 +36,11 @@ QWidget * create_widget_by_label(
     switch(field->label())
     {
         case pb::FieldDescriptor::LABEL_OPTIONAL:
+            return new OptionalFieldWidget(field);
         case pb::FieldDescriptor::LABEL_REQUIRED:
+            return new RequiredFieldWidget(field);
         case pb::FieldDescriptor::LABEL_REPEATED:
+            return new RepeatedFieldWidget(field);
         default:
             break;
     }
