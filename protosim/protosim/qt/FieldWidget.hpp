@@ -21,6 +21,7 @@
 #define PROTOSIM_QT_FIELDWIDGET_HPP
 
 #include <protosim/protobuf_fwd.hpp>
+#include <QtGui>
 
 namespace protosim 
 {
@@ -39,11 +40,49 @@ class FieldWidget
 {
 public:
 
-    void getWidgetValue(google::protobuf::Message * msg) = 0;
+    virtual void getWidgetValue(google::protobuf::Message * msg) = 0;
 
 protected:
 
-    FieldWidget();
+    FieldWidget(const google::protobuf::FieldDescriptor *);
+
+    const google::protobuf::FieldDescriptor * m_descriptor;
+};
+
+class RequiredFieldWidget : public QWidget, public FieldWidget
+{
+    Q_OBJECT
+public:
+
+    RequiredFieldWidget(const google::protobuf::FieldDescriptor * field, 
+            QWidget * parent = 0);
+    virtual ~RequiredFieldWidget();
+    
+    void getWidgetValue(google::protobuf::Message * msg);
+};
+
+class OptionalFieldWidget : public QWidget, public FieldWidget
+{
+    Q_OBJECT
+public:
+
+    OptionalFieldWidget(const google::protobuf::FieldDescriptor * field, 
+            QWidget * parent = 0);
+    virtual ~OptionalFieldWidget();
+    
+    void getWidgetValue(google::protobuf::Message * msg);
+};
+
+class RepeatedFieldWidget : public QWidget, public FieldWidget
+{
+    Q_OBJECT
+public:
+
+    RepeatedFieldWidget(const google::protobuf::FieldDescriptor * field, 
+            QWidget * parent = 0);
+    virtual ~RepeatedFieldWidget();
+    
+    void getWidgetValue(google::protobuf::Message * msg);
 };
 
 } // namespace qt

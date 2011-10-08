@@ -11,6 +11,7 @@
 #     "${CMAKE_CURRENT_SOURCE_DIR}/core/config.hpp" IMMEDIATE @ONLY)
 
 set(protosim_EXPORTED_HEADERS
+    protobuf_fwd.hpp
     )
 
 foreach(_header ${protosim_EXPORTED_HEADERS})
@@ -49,6 +50,7 @@ if(NOT DEFINED CORBASIM_DISABLE_UI)
     include(${QT_USE_FILE})
 
     set(protosim_qt_EXPORTED_HEADERS
+        qt/FieldWidget.hpp
         qt/ProtoMessageWidget.hpp
         qt/widgets.hpp
     )
@@ -60,9 +62,11 @@ if(NOT DEFINED CORBASIM_DISABLE_UI)
     endforeach(_header ${protosim_qt_EXPORTED_HEADERS})
 
     set(protosim_qt_MOC_HDRS
+        qt/FieldWidget.hpp
         qt/ProtoMessageWidget.hpp)
 
     set(protosim_qt_SRCS
+        qt/FieldWidget.cpp
         qt/ProtoMessageWidget.cpp
         qt/widgets.cpp)
 
