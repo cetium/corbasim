@@ -18,6 +18,7 @@
  */
 
 #include "FieldWidget.hpp"
+#include <protosim/qt/widgets.hpp>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
 
@@ -33,6 +34,9 @@ RequiredFieldWidget::RequiredFieldWidget(
         QWidget * parent) :
     QWidget(parent), FieldWidget(desc)
 {
+    QHBoxLayout * layout = new QHBoxLayout;
+    layout->addWidget(create_widget_by_type(desc));
+    setLayout(layout);
 }
 
 RequiredFieldWidget::~RequiredFieldWidget()
@@ -48,6 +52,10 @@ OptionalFieldWidget::OptionalFieldWidget(
         QWidget * parent) :
     QWidget(parent), FieldWidget(desc)
 {
+    QHBoxLayout * layout = new QHBoxLayout;
+    layout->addWidget(new QCheckBox);
+    layout->addWidget(create_widget_by_type(desc));
+    setLayout(layout);
 }
 
 OptionalFieldWidget::~OptionalFieldWidget()
@@ -63,6 +71,21 @@ RepeatedFieldWidget::RepeatedFieldWidget(
         QWidget * parent) :
     QWidget(parent), FieldWidget(desc)
 {
+    QGridLayout * layout = new QGridLayout;
+    layout->addWidget(new QLabel("Length"), 0, 0);
+    m_length = new QSpinBox;
+    layout->addWidget(m_length, 0, 1);
+    layout->addWidget(new QLabel("Index"), 0, 2);
+    m_index = new QSpinBox;
+    layout->addWidget(m_index, 0, 3);
+
+    m_stack = new QStackedWidget;
+    layout->addWidget(m_stack, 1, 0, 1, 4);
+    // TODO it's just an example
+    m_stack->addWidget(create_widget_by_type(desc));
+    setLayout(layout);
+
+    // TODO connects
 }
 
 RepeatedFieldWidget::~RepeatedFieldWidget()
