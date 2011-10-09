@@ -38,8 +38,20 @@ ProtoMessageWidget::ProtoMessageWidget(
         const google::protobuf::FieldDescriptor * field = 
             m_descriptor->field(i);
 
-        layout->addWidget(new QLabel(field->name().c_str()), i, 0);
-        layout->addWidget(create_widget_by_label(field), i, 1);
+        if (is_groupbox_widget(field))
+        {
+            QGroupBox * gb = new QGroupBox(field->name().c_str());
+            QVBoxLayout * gl = new QVBoxLayout;
+            gl->addWidget(create_widget_by_label(field));
+            gb->setLayout(gl);
+
+            layout->addWidget(gb, i, 0, 1, 2);
+        }
+        else
+        {
+            layout->addWidget(new QLabel(field->name().c_str()), i, 0);
+            layout->addWidget(create_widget_by_label(field), i, 1);
+        }
     }
 
     setLayout(layout);
