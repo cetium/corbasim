@@ -28,7 +28,7 @@ namespace protosim
 namespace qt
 {
 
-QWidget * create_widget_by_label(
+FieldWidget * create_widget_by_label(
         const google::protobuf::FieldDescriptor * field)
 {
     namespace pb = google::protobuf;

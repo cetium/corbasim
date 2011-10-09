@@ -35,7 +35,8 @@ RequiredFieldWidget::RequiredFieldWidget(
     QWidget(parent), FieldWidget(desc)
 {
     QHBoxLayout * layout = new QHBoxLayout;
-    layout->addWidget(create_widget_by_type(desc));
+    m_widget = create_widget_by_type(desc);
+    layout->addWidget(m_widget);
     setLayout(layout);
 }
 
@@ -53,8 +54,10 @@ OptionalFieldWidget::OptionalFieldWidget(
     QWidget(parent), FieldWidget(desc)
 {
     QHBoxLayout * layout = new QHBoxLayout;
-    layout->addWidget(new QCheckBox);
-    layout->addWidget(create_widget_by_type(desc));
+    m_has_value = new QCheckBox;
+    layout->addWidget(m_has_value);
+    m_widget = create_widget_by_type(desc);
+    layout->addWidget(m_widget);
     setLayout(layout);
 }
 

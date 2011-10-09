@@ -59,6 +59,10 @@ public:
     virtual ~RequiredFieldWidget();
     
     void getWidgetValue(google::protobuf::Message * msg);
+
+protected:
+
+    QWidget * m_widget;
 };
 
 class OptionalFieldWidget : public QWidget, public FieldWidget
@@ -71,6 +75,11 @@ public:
     virtual ~OptionalFieldWidget();
     
     void getWidgetValue(google::protobuf::Message * msg);
+
+protected:
+
+    QCheckBox * m_has_value;
+    QWidget * m_widget;
 };
 
 class RepeatedFieldWidget : public QWidget, public FieldWidget
