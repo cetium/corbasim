@@ -82,6 +82,15 @@ QWidget * create_widget_by_type(
     return NULL;
 }
 
+bool is_groupbox_widget(
+        const google::protobuf::FieldDescriptor * field)
+{
+    namespace pb = google::protobuf;
+
+    return (field->is_repeated() || 
+        (field->cpp_type() == pb::FieldDescriptor::CPPTYPE_MESSAGE));
+}
+
 } // namespace qt
 } // namespace protosim
 

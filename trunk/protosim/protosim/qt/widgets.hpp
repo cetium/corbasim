@@ -43,6 +43,9 @@ QWidget * create_widget_by_label(
 QWidget * create_widget_by_type(
         const google::protobuf::FieldDescriptor * field);
 
+bool is_groupbox_widget(
+        const google::protobuf::FieldDescriptor * field);
+
 } // namespace qt
 } // namespace protosim
 
