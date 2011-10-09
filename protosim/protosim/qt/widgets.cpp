@@ -55,9 +55,29 @@ QWidget * create_widget_by_type(
     switch(field->cpp_type())
     {
         case pb::FieldDescriptor::CPPTYPE_MESSAGE:
-            // TODO
+            return new ProtoMessageWidget(field->message_type());
+        case pb::FieldDescriptor::CPPTYPE_STRING:
+            return new QLineEdit;
+        case pb::FieldDescriptor::CPPTYPE_INT32:
+        case pb::FieldDescriptor::CPPTYPE_UINT32:
+        case pb::FieldDescriptor::CPPTYPE_INT64:
+        case pb::FieldDescriptor::CPPTYPE_UINT64:
+            return new QSpinBox;
+        case pb::FieldDescriptor::CPPTYPE_ENUM:
+            {
+                QComboBox * cb = new QComboBox;
+                const pb::EnumDescriptor * en = field->enum_type();
+                int count = en->value_count();
+
+                for (int i = 0; i < count; i++) 
+                {
+                    const pb::EnumValueDescriptor * value = en->value(i);
+                    cb->addItem(value->name().c_str());
+                }
+                return cb;
+            }
         default:
-            break;
+            return new QSpinBox;
     }
     return NULL;
 }

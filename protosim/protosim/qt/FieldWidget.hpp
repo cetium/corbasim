@@ -83,6 +83,12 @@ public:
     virtual ~RepeatedFieldWidget();
     
     void getWidgetValue(google::protobuf::Message * msg);
+
+protected:
+
+    QSpinBox * m_length;
+    QSpinBox * m_index;
+    QStackedWidget * m_stack;
 };
 
 } // namespace qt
