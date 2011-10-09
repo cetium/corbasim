@@ -20,24 +20,18 @@
 #ifndef PROTOSIM_QT_WIDGETS_HPP
 #define PROTOSIM_QT_WIDGETS_HPP
 
+#include <protosim/protobuf_fwd.hpp>
+
 class QWidget;
-
-namespace google 
-{
-namespace protobuf 
-{
-
-class FieldDescriptor;
-
-} // namespace protobuf
-} // namespace google
 
 namespace protosim 
 {
 namespace qt 
 {
 
-QWidget * create_widget_by_label(
+class FieldWidget;
+
+FieldWidget * create_widget_by_label(
         const google::protobuf::FieldDescriptor * field);
 
 QWidget * create_widget_by_type(

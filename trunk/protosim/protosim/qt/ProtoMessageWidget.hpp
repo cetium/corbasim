@@ -22,11 +22,14 @@
 
 #include <QtGui>
 #include <protosim/protobuf_fwd.hpp>
+#include <vector>
 
 namespace protosim 
 {
 namespace qt 
 {
+
+class FieldWidget;
 
 class ProtoMessageWidget : public QWidget
 {
@@ -36,8 +39,11 @@ public:
             QWidget * parent = 0);
     virtual ~ProtoMessageWidget();
 
+    void getWidgetValue(google::protobuf::Message * msg);
+
 protected:
     const google::protobuf::Descriptor * m_descriptor;
+    std::vector< FieldWidget * > m_fields;
 };
 
 } // namespace qt

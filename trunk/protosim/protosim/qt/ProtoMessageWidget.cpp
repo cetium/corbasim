@@ -19,8 +19,10 @@
 
 #include "ProtoMessageWidget.hpp"
 #include <protosim/qt/widgets.hpp>
+#include <protosim/qt/FieldWidget.hpp>
 
 #include <google/protobuf/descriptor.h>
+#include <google/protobuf/message.h>
 
 using namespace protosim::qt;
 
@@ -33,16 +35,20 @@ ProtoMessageWidget::ProtoMessageWidget(
 
     int count = m_descriptor->field_count();
 
+    m_fields.reserve(count);
+
     for (int i = 0; i < count; i++) 
     {
         const google::protobuf::FieldDescriptor * field = 
             m_descriptor->field(i);
 
+        m_fields.push_back(create_widget_by_label(field));
+
         if (is_groupbox_widget(field))
         {
             QGroupBox * gb = new QGroupBox(field->name().c_str());
             QVBoxLayout * gl = new QVBoxLayout;
-            gl->addWidget(create_widget_by_label(field));
+            gl->addWidget(dynamic_cast< QWidget* >(m_fields.back()));
             gb->setLayout(gl);
 
             layout->addWidget(gb, i, 0, 1, 2);
@@ -50,7 +56,7 @@ ProtoMessageWidget::ProtoMessageWidget(
         else
         {
             layout->addWidget(new QLabel(field->name().c_str()), i, 0);
-            layout->addWidget(create_widget_by_label(field), i, 1);
+            layout->addWidget(dynamic_cast< QWidget* >(m_fields.back()), i, 1);
         }
     }
 
@@ -59,5 +65,13 @@ ProtoMessageWidget::ProtoMessageWidget(
 
 ProtoMessageWidget::~ProtoMessageWidget()
 {
+}
+
+void ProtoMessageWidget::getWidgetValue(google::protobuf::Message * msg)
+{
+    int count = m_descriptor->field_count();
+
+    for (int i = 0; i < count; i++) 
+        m_fields[i]->getWidgetValue(msg);
 }
 
