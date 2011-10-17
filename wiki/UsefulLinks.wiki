@@ -1,0 +1,3 @@
+= Useful links =
+
+* http://developer.qt.nokia.com/quarterly/view/using_cmake_to_build_qt_projects
