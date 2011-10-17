@@ -1,3 +1,11 @@
 = Useful links =
 
+== QT ==
+
 * [http://developer.qt.nokia.com/quarterly/view/using_cmake_to_build_qt_projects Using CMake to Build Qt Projects]
+
+== Scripting ==
+
+=== Lua and Luabind ===
+
+* [http://www.nuclex.org/articles/5-cxx/1-quick-introduction-to-luabind Quick Introduction to LuaBind]
