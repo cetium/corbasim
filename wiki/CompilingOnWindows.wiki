@@ -1,0 +1,7 @@
+* http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express
+
+* http://stackoverflow.com/questions/2629421/how-to-use-boost-in-visual-studio-2010
+
+* http://qt.nokia.com/downloads/
+
+* ACE+TAO...
