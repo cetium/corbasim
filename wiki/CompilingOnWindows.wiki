@@ -1,17 +1,17 @@
 = Links =
 
-* Microsoft Visual C++ Express 2010 http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express
+  * Microsoft Visual C++ Express 2010 http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express
 
-* Boost C++ libraries http://stackoverflow.com/questions/2629421/how-to-use-boost-in-visual-studio-2010
+  * Boost C++ libraries http://stackoverflow.com/questions/2629421/how-to-use-boost-in-visual-studio-2010
 
-* Qt http://qt.nokia.com/downloads/
+  * Qt http://qt.nokia.com/downloads/
 
-* Python http://www.python.org/download/
+  * Python http://www.python.org/download/
 
-* ACE+TAO http://download.dre.vanderbilt.edu/
+  * ACE+TAO http://download.dre.vanderbilt.edu/
 
-* TortoiseSVN http://tortoisesvn.net/downloads.html
+  * TortoiseSVN http://tortoisesvn.net/downloads.html
 
 = TODO =
 
-# Write an executable script to run corbasim idl compiler.
+  # Write an executable script to run corbasim idl compiler.
