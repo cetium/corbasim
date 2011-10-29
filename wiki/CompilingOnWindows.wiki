@@ -8,10 +8,14 @@
 
   * Python http://www.python.org/download/
 
+    Optional. You only need Python for scripting utilities support.
+
   * ACE+TAO http://download.dre.vanderbilt.edu/
+
+    Download an ACE+TAO tarball containing a Visual C++ Express 2010 project.
 
   * TortoiseSVN http://tortoisesvn.net/downloads.html
 
 = TODO =
 
-  # Write an executable script to run corbasim idl compiler.
+  # Write an executable script to run corbasim idl compiler on Windows.
