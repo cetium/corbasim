@@ -1,4 +1,4 @@
-= Compiling with Microsoft Visual C++ Express 2010 =
+= How to compile CORBASIM with Microsoft Visual C++ Express 2010 =
 == Installing dependencies ==
   # Download and install Microsoft Visual C++ Express 2010. It is available from: 
     http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express
