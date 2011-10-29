@@ -1,5 +1,5 @@
 = Compiling with Microsoft Visual C++ Express 2010 =
-
+== Installing dependencies ==
   # Download and install Microsoft Visual C++ Express 2010. It is available from: 
     http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express
   # Download the latest version of Boost C++ libraries from:
@@ -17,6 +17,10 @@
     http://www.dre.vanderbilt.edu/~schmidt/DOC_ROOT/ACE/ACE-INSTALL.html#msvc
   # There is still no corbasim packaged distribution, so you will need download corbasim source code from the SVN repository. You may use TortoiseSVN, available from:
     http://tortoisesvn.net/downloads.html
+
+== Compiling corbasim ==
+
+  # Checkout corbasim source code.
 
 = Pending tasks =
 
