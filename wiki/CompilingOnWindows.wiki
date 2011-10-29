@@ -13,7 +13,9 @@
   # ACE+TAO. 
     Download an ACE+TAO tarball containing a Microsoft Visual C++ Express 2010 project from:
      http://download.dre.vanderbilt.edu/
-   I don't know the first version of ACE+TAO with a project for Microsoft Visual C++ Express 2010. I used the latest version. Here are the instructions to compile them with mscv-10:
+     # Unzip the downloaded package, for example at C:\ACE_wrappers
+     # Append C:\ACE_wrappers\bin and C:\ACE_wrappers\lib to your Path environment variable.
+   I don't know the first version of ACE+TAO with a project for Microsoft Visual C++ Express 2010. I used the latest version (6.0.5). Here are the instructions to compile them with mscv-10:
     http://www.dre.vanderbilt.edu/~schmidt/DOC_ROOT/ACE/ACE-INSTALL.html#msvc
   # There is still no corbasim packaged distribution, so you will need download corbasim source code from the SVN repository. You may use TortoiseSVN, available from:
     http://tortoisesvn.net/downloads.html
