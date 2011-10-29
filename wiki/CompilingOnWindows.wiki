@@ -1,3 +1,5 @@
+= Links =
+
 * Microsoft Visual C++ Express 2010 http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express
 
 * Boost C++ libraries http://stackoverflow.com/questions/2629421/how-to-use-boost-in-visual-studio-2010
@@ -9,3 +11,7 @@
 * ACE+TAO http://download.dre.vanderbilt.edu/
 
 * TortoiseSVN http://tortoisesvn.net/downloads.html
+
+= TODO =
+
+# Write an executable script to run corbasim idl compiler.
