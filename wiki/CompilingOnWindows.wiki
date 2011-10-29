@@ -1,23 +1,23 @@
-= Links =
+= Compiling with Microsoft Visual C++ Express 2010 =
 
-  * Microsoft Visual C++ Express 2010 http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express
-
-  * Boost C++ libraries http://stackoverflow.com/questions/2629421/how-to-use-boost-in-visual-studio-2010
-
-  * Qt http://qt.nokia.com/downloads/
-
-  * Python http://www.python.org/download/
-
-    Optional. You only need Python for scripting utilities support.
-
-  * ACE+TAO http://download.dre.vanderbilt.edu/
-
-    Download an ACE+TAO tarball containing a Visual C++ Express 2010 project.
-
+  # Download and install Microsoft Visual C++ Express 2010. It is available from: 
+    http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express
+  # Download the latest version of Boost C++ libraries from:
+         http://www.boost.org
+   You can find here how to compile them with Microsoft Visual C++ Express 2010: 
+     http://stackoverflow.com/questions/2629421/how-to-use-boost-in-visual-studio-2010
+  # Download and install Qt Libraries from:
+    http://qt.nokia.com/downloads/
+  # If you want Python scripting support you have to install Python for Windows. It is available from: 
+    http://www.python.org/download/
+  # ACE+TAO. 
+    Download an ACE+TAO tarball containing a Microsoft Visual C++ Express 2010 project from:
+     http://download.dre.vanderbilt.edu/
+   I don't know the first version of ACE+TAO with a project for Microsoft Visual C++ Express 2010. I used the latest version. Here are the instructions to compile them with mscv-10:
     http://www.dre.vanderbilt.edu/~schmidt/DOC_ROOT/ACE/ACE-INSTALL.html#msvc
+  # There is still no corbasim packaged distribution, so you will need download corbasim source code from the SVN repository. You may use TortoiseSVN, available from:
+    http://tortoisesvn.net/downloads.html
 
-  * TortoiseSVN http://tortoisesvn.net/downloads.html
-
-= TODO =
+= Pending tasks =
 
   # Write an executable script to run corbasim idl compiler on Windows.
