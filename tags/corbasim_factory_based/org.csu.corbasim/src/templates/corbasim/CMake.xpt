@@ -1,0 +1,116 @@
+«IMPORT org::csu::idl::idlmm»
+
+«EXTENSION templates::corbasim::corbasim»
+
+«DEFINE main FOR TranslationUnit-»
+«LET getFileName() AS filename»
+«FILE filename+".cmake"»
+
+find_package(Qt4 REQUIRED)
+include(${QT_USE_FILE})
+
+set(«filename»_GENERATED
+	${CMAKE_CURRENT_SOURCE_DIR}/«filename»C.h
+	${CMAKE_CURRENT_SOURCE_DIR}/«filename»C.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/«filename»C.inl
+	${CMAKE_CURRENT_SOURCE_DIR}/«filename»S.h
+	${CMAKE_CURRENT_SOURCE_DIR}/«filename»S.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/«filename»S.inl)
+
+add_custom_command(
+	OUTPUT ${«filename»_GENERATED}
+	DEPENDS «filename».idl
+	COMMAND tao_idl ${TAO_IDL_OPTIONS} «filename».idl
+	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(${CORBASIM_PREFIX}«filename»_idl SHARED ${«filename»_GENERATED} «getAdaptedFileCPP()»)
+	«IF !includes.isEmpty-»
+target_link_libraries(${CORBASIM_PREFIX}«filename»_idl
+		«FOREACH includes AS e-»
+	${CORBASIM_PREFIX}«e.getFileName()»_idl
+		«ENDFOREACH-»)
+	«ENDIF-»
+
+	«EXPAND cmake FOREACH contains SEPARATOR "\n\n"»
+	
+«ENDFILE»
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE cmake FOR Contained»«ENDDEFINE»
+«DEFINE cmake FOR ModuleDef»
+	«EXPAND cmake FOREACH contains SEPARATOR "\n\n"»
+«ENDDEFINE»
+
+«DEFINE cmake FOR InterfaceDef»
+«LET getFQN("_") AS fqn»
+	«IF generateLibrary()-»
+# Corbasim library	
+add_library(corbasim_lib_«fqn» SHARED «fqn»_lib.cpp)
+target_link_libraries(corbasim_lib_«fqn»
+	${CORBASIM_PREFIX}«getTranslationUnit().getFileName()»_idl
+	# CORBASIM Libraries
+	corbasim corbasim_qt)
+	«ENDIF-»
+
+«REM»	
+	«IF generateReflectiveLibrary()-»
+# Corbasim reflective library	
+add_library(corbasim_reflective_«fqn» SHARED «fqn»_reflective.cpp)
+target_link_libraries(corbasim_reflective_«fqn»
+	${CORBASIM_PREFIX}«getTranslationUnit().getFileName()»_idl
+	# CORBASIM Library
+	corbasim)
+	«ENDIF-»
+«ENDREM»
+
+	«IF generateClient()-»
+# Client
+add_executable(${CORBASIM_PREFIX}«fqn»_client «fqn»_client_main.cpp)
+target_link_libraries(${CORBASIM_PREFIX}«fqn»_client 
+	${CORBASIM_PREFIX}«getTranslationUnit().getFileName()»_idl
+	corbasim_lib_«fqn»
+	# CORBASIM Libraries
+	corbasim corbasim_qt)
+	«ENDIF-»
+	
+	«IF generateInjector()-»
+# Injector	
+add_executable(${CORBASIM_PREFIX}«fqn»_injector «fqn»_injector.cpp)
+target_link_libraries(${CORBASIM_PREFIX}«fqn»_injector
+	${CORBASIM_PREFIX}«getTranslationUnit().getFileName()»_idl
+	# CORBASIM Libraries
+	corbasim)
+	«ENDIF-»
+	
+	«IF generateServer()-»
+# Server
+add_executable(${CORBASIM_PREFIX}«fqn»_server «fqn»_server.cpp)
+target_link_libraries(${CORBASIM_PREFIX}«fqn»_server 
+	${CORBASIM_PREFIX}«getTranslationUnit().getFileName()»_idl
+	# CORBASIM Libraries
+	corbasim
+	# Boost
+	boost_program_options)
+	«ENDIF-»
+«REM»	
+	«IF generatePyStim()-»
+# PyStim
+add_executable(${CORBASIM_PREFIX}«fqn»_pystim «fqn»_pystim.cpp)
+target_link_libraries(${CORBASIM_PREFIX}«fqn»_pystim 
+	${CORBASIM_PREFIX}«getTranslationUnit().getFileName()»_idl
+	# CORBASIM Libraries
+	corbasim corbasim_python corbasim_qt)
+	«ENDIF-»
+	
+	«IF generateInterpreter()-»
+# Interpreter
+add_executable(${CORBASIM_PREFIX}«fqn»_interpreter «fqn»_interpreter.cpp)
+target_link_libraries(${CORBASIM_PREFIX}«fqn»_interpreter 
+	${CORBASIM_PREFIX}«getTranslationUnit().getFileName()»_idl
+	# CORBASIM Libraries
+	corbasim corbasim_python)
+	«ENDIF-»
+«ENDREM»	
+«ENDLET»
+«ENDDEFINE»
