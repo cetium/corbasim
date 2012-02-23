@@ -77,17 +77,6 @@ bool primitive_reflective< T >::is_primitive() const
     return true; 
 }
 
-template< typename T >
-double primitive_reflective< T >::to_double(holder const& value) const
-{
-    typedef holder_ref_impl< T > impl_t;
-
-    impl_t const * p = reinterpret_cast< impl_t const * >(
-            value.m_impl.get());
-
-    return (double) p->t_;
-}
-
 template< >
 reflective_type primitive_reflective< double >::get_type() const
 {
@@ -109,43 +98,43 @@ reflective_type primitive_reflective< char >::get_type() const
 template< >
 reflective_type primitive_reflective< unsigned char >::get_type() const
 {
-    return TYPE_OCTET;
+    return TYPE_INT8;
 }
 
 template< >
 reflective_type primitive_reflective< short >::get_type() const
 {
-    return TYPE_SHORT;
+    return TYPE_INT16;
 }
 
 template< >
 reflective_type primitive_reflective< unsigned short >::get_type() const
 {
-    return TYPE_USHORT;
+    return TYPE_UINT16;
 }
 
 template< >
-reflective_type primitive_reflective< CORBA::ULong >::get_type() const
+reflective_type primitive_reflective< uint32_t >::get_type() const
 {
-    return TYPE_ULONG;
+    return TYPE_UINT32;
 }
 
 template< >
-reflective_type primitive_reflective< CORBA::Long >::get_type() const
+reflective_type primitive_reflective< int32_t >::get_type() const
 {
-    return TYPE_LONG;
+    return TYPE_INT32;
 }
 
 template< >
-reflective_type primitive_reflective< CORBA::ULongLong >::get_type() const
+reflective_type primitive_reflective< uint64_t >::get_type() const
 {
-    return TYPE_ULONGLONG;
+    return TYPE_UINT64;
 }
 
 template< >
-reflective_type primitive_reflective< CORBA::LongLong >::get_type() const
+reflective_type primitive_reflective< int64_t >::get_type() const
 {
-    return TYPE_LONGLONG;
+    return TYPE_INT64;
 }
 
 template< typename T >
