@@ -181,3 +181,62 @@ void reflective_base::copy(holder const & src, holder& dst) const
 {
 }
 
+// Interface Reflective Base
+
+void reflective_group_base::insert_reflective(
+        const std::string& name,
+        tag_t tag, reflective_base const * reflective)
+{
+    m_reflectives.push_back(reflective);
+
+    // Maps
+    m_reflectives_by_name.insert(std::make_pair(name, reflective));
+    m_reflectives_by_tag.insert(std::make_pair(tag, reflective));
+}
+
+reflective_group_base::reflective_group_base()
+{
+}
+
+reflective_group_base::~reflective_group_base()
+{
+}
+
+unsigned int reflective_group_base::get_reflective_count() const
+{
+    return m_reflectives.size();
+}
+
+reflective_base const * 
+reflective_group_base::get_reflective_by_index(
+        unsigned int idx) const
+{
+    return m_reflectives[idx];
+}
+
+reflective_base const * 
+reflective_group_base::get_reflective_by_name(
+        const std::string& name) const
+{
+    reflectives_by_name_t::const_iterator it;
+    it = m_reflectives_by_name.find(name);
+
+    if (it != m_reflectives_by_name.end())
+        return it->second;
+
+    return NULL;
+}
+
+reflective_base const * 
+reflective_group_base::get_reflective_by_tag(
+        tag_t tag) const
+{
+    reflectives_by_tag_t::const_iterator it;
+    it = m_reflectives_by_tag.find(tag);
+
+    if (it != m_reflectives_by_tag.end())
+        return it->second;
+
+    return NULL;
+}
+

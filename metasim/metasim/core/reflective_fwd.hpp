@@ -21,6 +21,8 @@
 #define METASIM_CORE_REFLECTIVE_FWD_HPP
 
 #include <string>
+#include <vector>
+#include <map>
 #include <boost/cstdint.hpp>
 #include <boost/shared_ptr.hpp>
 #include <metasim/core/holder.hpp>
@@ -30,7 +32,21 @@ namespace metasim
 namespace core 
 {
 
-// And some other special cases for holders...
+/**
+ * Tags
+ */
+typedef const int * tag_t;
+
+template< typename T >
+struct tag
+{
+    static inline tag_t value()
+    {
+        static const int value_ = 0;
+        return &value_;
+    }
+};
+
 enum reflective_type
 {
     TYPE_INVALID,
@@ -113,6 +129,43 @@ typedef boost::shared_ptr< reflective_base > reflective_ptr;
 
 template< typename T >
 struct reflective;
+
+struct reflective_group_base
+{
+    reflective_group_base();
+    ~reflective_group_base();
+
+    unsigned int get_reflective_count() const;
+    reflective_base const * get_reflective_by_name(
+            const std::string& name) const;
+    reflective_base const * get_reflective_by_index(unsigned int idx) const;
+    reflective_base const * get_reflective_by_tag(tag_t tag) const;
+
+    void insert_reflective(const std::string& name,
+        tag_t tag, reflective_base const * reflective);
+
+    template< typename T >
+    void insert_type(const std::string& name)
+    {
+        insert_reflective(name, tag< T >::value(), 
+                reflective< T >::get_instance());
+    }
+
+protected:
+
+    // Data
+    typedef std::vector< reflective_base const * > 
+        reflectives_t;
+    reflectives_t m_reflectives;
+
+    typedef std::map< std::string, reflective_base const * > 
+        reflectives_by_name_t;
+    reflectives_by_name_t m_reflectives_by_name;
+
+    typedef std::map< tag_t, reflective_base const * > 
+        reflectives_by_tag_t;
+    reflectives_by_tag_t m_reflectives_by_tag;
+};
 
 } // namespace core
 } // namespace metasim
