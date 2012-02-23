@@ -25,7 +25,7 @@
 
 #include <metasim/gui/qvariant.hpp>
 
-//#include <metasim/json/reflective.hpp>
+#include <metasim/json/reflective.hpp>
 
 #include <metasim/core/reflective_fwd.hpp>
 
@@ -35,10 +35,8 @@
 using namespace metasim::gui;
 
 DataModel::DataModel(QObject * parent) :
-    QAbstractItemModel(parent), m_instance(NULL)
+    QAbstractItemModel(parent)
 {
-    m_outputIcon = qApp->style()->standardIcon(QStyle::SP_ArrowLeft);
-
     setSupportedDragActions(Qt::CopyAction);
 }
 
@@ -48,7 +46,6 @@ DataModel::~DataModel()
 
 QMimeData * DataModel::mimeData(const QModelIndexList& indexes) const
 {
-#if 0
     if (indexes.size() == 2) // both columns
     {
         int pos = indexToPosition(indexes.at(0));
@@ -57,19 +54,16 @@ QMimeData * DataModel::mimeData(const QModelIndexList& indexes) const
 
         const ModelEntry& entry = m_entries.at(pos);
 
-        core::operation_reflective_base const * reflective = 
-            entry.reflective;
+        core::reflective_base const * reflective = entry.reflective;
 
-        core::holder holder = reflective->get_holder(entry.req);
-
-        json::write(oss, reflective, holder);
+        json::write(oss, reflective, entry.holder);
 
         QMimeData *mimeData = new QMimeData;
         mimeData->setText(oss.str().c_str());
 
         return mimeData;
     }
-#endif
+
     return NULL;
 }
 
@@ -301,17 +295,7 @@ int DataModel::rowCount(const QModelIndex &parent) const
     return node->children.size();
 }
 
-metasim::event::request_ptr DataModel::getRequest(int pos)
-{
-    return m_entries.at(pos).req;
-}
-
-void DataModel::initialize(core::interface_reflective_base const * instance)
-{
-    m_instance = instance;
-}
-
-void DataModel::clearLog()
+void DataModel::clearModel()
 {
     beginResetModel();
     reset();
@@ -325,7 +309,7 @@ void DataModel::resetInternalData()
     m_nodes.clear();
 }
 
-void DataModel::addEntry(metasim::core::reflective_base const * reflective;
+void DataModel::addEntry(metasim::core::reflective_base const * reflective,
 	metasim::core::holder holder, int pos)
 {
     if (pos == -1)
@@ -337,11 +321,11 @@ void DataModel::addEntry(metasim::core::reflective_base const * reflective;
 
     beginInsertRows(QModelIndex(), pos, pos);
 
-    Node_ptr node(new Node(op, holder));
+    Node_ptr node(new Node(reflective, holder));
     m_nodes.insert(pos, node);
 
     // List
-    entry.req = req;
+    entry.holder = holder;
 
     // entry.text = QString("Outgoing call ") + op->get_name();
 

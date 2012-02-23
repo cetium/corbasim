@@ -2,6 +2,8 @@
 # CORE LIBRARY
 #
 set(metasim_core_SRCS 
+    json/reflective.cpp
+    json/detail/modp_b64.c
     core/reflective.cpp)
 
 add_library(metasim_core SHARED ${metasim_core_SRCS})
@@ -29,7 +31,7 @@ set(metasim_gui_MOC_HDRS
 set(metasim_gui_SRCS
     gui/ModelNode.cpp
     gui/qvariant.cpp
-    gui/DataModel.hpp
+    gui/DataModel.cpp
     gui/ReflectiveGUI.cpp)
 
 set(metasim_gui_LIBS
