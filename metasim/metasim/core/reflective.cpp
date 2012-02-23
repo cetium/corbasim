@@ -18,6 +18,7 @@
  */
 
 #include "reflective.hpp"
+#include "reflective.ipp"
 #include "reflective_primitive.ipp"
 
 namespace metasim 
@@ -25,34 +26,36 @@ namespace metasim
 namespace core 
 {
 
-template CORBA::Boolean& holder::to_value< CORBA::Boolean >();
-template CORBA::Short& holder::to_value< CORBA::Short >();
-template CORBA::UShort& holder::to_value< CORBA::UShort >();
-template CORBA::Char& holder::to_value< CORBA::Char >();
-template CORBA::Octet& holder::to_value< CORBA::Octet >();
-template CORBA::Long& holder::to_value< CORBA::Long >();
-template CORBA::ULong& holder::to_value< CORBA::ULong >();
-template CORBA::LongLong& holder::to_value< CORBA::LongLong >();
-template CORBA::ULongLong& holder::to_value< CORBA::ULongLong >();
-template CORBA::Float& holder::to_value< CORBA::Float >();
-template CORBA::Double& holder::to_value< CORBA::Double >();
+template bool& holder::to_value< bool >();
+template short& holder::to_value< short >();
+template unsigned short& holder::to_value< unsigned short >();
+template char& holder::to_value< char >();
+template unsigned char& holder::to_value< unsigned char >();
+template int32_t& holder::to_value< int32_t >();
+template uint32_t& holder::to_value< uint32_t >();
+template uint64_t& holder::to_value< uint64_t >();
+template int64_t& holder::to_value< int64_t >();
+template float& holder::to_value< float >();
+template double& holder::to_value< double >();
 
 namespace detail 
 {
 
-template class bool_reflective< CORBA::Boolean >;
-template class primitive_reflective< CORBA::Short >;
-template class primitive_reflective< CORBA::UShort >;
-template class primitive_reflective< CORBA::Char >;
-template class primitive_reflective< CORBA::Octet >;
-template class primitive_reflective< CORBA::Long >;
-template class primitive_reflective< CORBA::ULong >;
-template class primitive_reflective< CORBA::LongLong >;
-template class primitive_reflective< CORBA::ULongLong >;
-template class primitive_reflective< CORBA::Float >;
-template class primitive_reflective< CORBA::Double >;
+template class bool_reflective< bool >;
+template class primitive_reflective< short >;
+template class primitive_reflective< unsigned short >;
+template class primitive_reflective< char >;
+template class primitive_reflective< unsigned char >;
+template class primitive_reflective< int32_t >;
+template class primitive_reflective< uint32_t >;
+template class primitive_reflective< uint64_t >;
+template class primitive_reflective< int64_t >;
+template class primitive_reflective< float >;
+template class primitive_reflective< double >;
 
-template class objrefvar_reflective< CORBA::Object_var >;
+accessor_base::~accessor_base()
+{
+}
 
 } // namespace detail
 } // namespace core
@@ -162,11 +165,6 @@ holder reflective_base::get_child_value(holder& value,
     return holder();
 }
 
-double reflective_base::to_double(holder const& value) const
-{
-    return 0.0;
-}
-
 std::string reflective_base::to_string(holder const& value) const
 {
     return std::string();
@@ -178,77 +176,6 @@ void reflective_base::from_string(holder& value,
 }
 
 void reflective_base::copy(holder const & src, holder& dst) const
-{
-}
-
-// Interface Reflective Base
-
-void interface_reflective_base::insert_reflective(
-        const std::string& name,
-        tag_t tag, operation_reflective_base const * reflective)
-{
-    m_reflectives.push_back(reflective);
-
-    // Maps
-    m_reflectives_by_name.insert(std::make_pair(name, reflective));
-    m_reflectives_by_tag.insert(std::make_pair(tag, reflective));
-}
-
-interface_reflective_base::~interface_reflective_base()
-{
-}
-
-unsigned int interface_reflective_base::operation_count() const
-{
-    return m_reflectives.size();
-}
-
-operation_reflective_base const * 
-interface_reflective_base::get_reflective_by_index(
-        unsigned int idx) const
-{
-    return m_reflectives[idx];
-}
-
-operation_reflective_base const * 
-interface_reflective_base::get_reflective_by_name(
-        const std::string& name) const
-{
-    reflectives_by_name_t::const_iterator it;
-    it = m_reflectives_by_name.find(name);
-
-    if (it != m_reflectives_by_name.end())
-        return it->second;
-
-    return NULL;
-}
-
-operation_reflective_base const * 
-interface_reflective_base::get_reflective_by_tag(
-        tag_t tag) const
-{
-    reflectives_by_tag_t::const_iterator it;
-    it = m_reflectives_by_tag.find(tag);
-
-    if (it != m_reflectives_by_tag.end())
-        return it->second;
-
-    return NULL;
-}
-
-// Operation reflective base
-operation_reflective_base::~operation_reflective_base()
-{
-}
-
-objrefvar_reflective_base::~objrefvar_reflective_base()
-{
-}
-
-objrefvar_reflective_base::objrefvar_reflective_base(
-        reflective_base const * parent, 
-            unsigned int child_index) :
-    reflective_base(parent, child_index)
 {
 }
 

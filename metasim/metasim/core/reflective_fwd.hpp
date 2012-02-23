@@ -20,6 +20,7 @@
 #ifndef METASIM_CORE_REFLECTIVE_FWD_HPP
 #define METASIM_CORE_REFLECTIVE_FWD_HPP
 
+#include <string>
 #include <boost/shared_ptr.hpp>
 
 namespace metasim 
@@ -27,56 +28,27 @@ namespace metasim
 namespace core 
 {
 
-struct holder;
-
-struct holder_impl_base {};
-
-typedef boost::shared_ptr< holder_impl_base > holder_impl_ptr;
-
-template< typename T >
-struct holder_ref_impl;
-
-struct holder
-{
-    holder();
-
-    /**
-     * @brief Assumes its shared ownership.
-     *
-     * @param impl
-     */
-    holder(holder_impl_base * impl);
-
-    holder(const holder& o);
-
-    holder& operator=(const holder& o);
-
-    template< typename Value >
-    Value& to_value();
-    
-    holder_impl_ptr m_impl;
-};
-
-
 // And some other special cases for holders...
 enum reflective_type
 {
     TYPE_INVALID,
-    TYPE_CHAR,
-    TYPE_OCTET,
+
     TYPE_BOOL,
     TYPE_ENUM,
-    TYPE_SHORT,
-    TYPE_USHORT,
-    TYPE_LONG,
-    TYPE_ULONG,
-    TYPE_LONGLONG,
-    TYPE_ULONGLONG,
+    TYPE_CHAR,
+    TYPE_INT8 = TYPE_CHAR,
+    TYPE_UINT8,
+    TYPE_INT16,
+    TYPE_UINT16,
+    TYPE_INT32,
+    TYPE_UINT32,
+    TYPE_INT64,
+    TYPE_UINT64,
     TYPE_FLOAT,
     TYPE_DOUBLE,
+
     TYPE_STRING,
     TYPE_WSTRING,
-    TYPE_OBJREF,
     TYPE_STRUCT,
     TYPE_ARRAY,
     TYPE_UNION,
@@ -88,11 +60,9 @@ struct reflective_base
 {
     virtual ~reflective_base();
 
-    // static information
-    // virtual tag_t get_tag() const = 0;
-
     virtual const char * get_type_name() const;
 
+    // Relative to its parent
     reflective_base const * get_parent() const;
     unsigned int get_child_index() const;
 
@@ -107,7 +77,7 @@ struct reflective_base
 
     virtual reflective_type get_type() const;
 
-    // Requires is_repeated
+    // Requires is_repeated or is_enum
     virtual reflective_base const * get_slice() const;
 
     virtual holder create_holder() const;
@@ -119,12 +89,15 @@ struct reflective_base
     virtual holder get_child_value(holder& value, 
         unsigned int idx) const;
     
-    virtual double to_double(holder const& value) const;
+    // String types
     virtual std::string to_string(holder const& h) const;
     virtual void from_string(holder& h, const std::string& str) const;
+
+    // All types
     virtual void copy(holder const& src, holder& dst) const;
 
 protected:
+
     reflective_base(reflective_base const * parent = NULL, 
             unsigned int child_index = 0);
 
