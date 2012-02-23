@@ -37,6 +37,7 @@ template uint64_t& holder::to_value< uint64_t >();
 template int64_t& holder::to_value< int64_t >();
 template float& holder::to_value< float >();
 template double& holder::to_value< double >();
+template std::string& holder::to_value< std::string >();
 
 namespace detail 
 {
@@ -52,6 +53,7 @@ template class primitive_reflective< uint64_t >;
 template class primitive_reflective< int64_t >;
 template class primitive_reflective< float >;
 template class primitive_reflective< double >;
+template class std_string_reflective< std::string >;
 
 accessor_base::~accessor_base()
 {
