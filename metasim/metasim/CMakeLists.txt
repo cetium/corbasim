@@ -11,7 +11,9 @@ add_library(metasim_core SHARED ${metasim_core_SRCS})
 #
 
 set(metasim_gui_EXPORTED_HEADERS
+    gui/ModelNode.hpp
     gui/qvariant.hpp
+    gui/DataModel.hpp
     gui/ReflectiveGUI.hpp)
 
 foreach(_header ${metasim_gui_EXPORTED_HEADERS})
@@ -21,10 +23,13 @@ foreach(_header ${metasim_gui_EXPORTED_HEADERS})
 endforeach(_header ${metasim_gui_EXPORTED_HEADERS})
 
 set(metasim_gui_MOC_HDRS
+    gui/DataModel.hpp
     gui/ReflectiveGUI.hpp)
 
 set(metasim_gui_SRCS
+    gui/ModelNode.cpp
     gui/qvariant.cpp
+    gui/DataModel.hpp
     gui/ReflectiveGUI.cpp)
 
 set(metasim_gui_LIBS
