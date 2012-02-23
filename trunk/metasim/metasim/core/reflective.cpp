@@ -181,7 +181,7 @@ void reflective_base::copy(holder const & src, holder& dst) const
 {
 }
 
-// Interface Reflective Base
+// Reflective Group Base
 
 void reflective_group_base::insert_reflective(
         const std::string& name,
