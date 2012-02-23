@@ -21,7 +21,9 @@
 #define METASIM_CORE_REFLECTIVE_FWD_HPP
 
 #include <string>
+#include <boost/cstdint.hpp>
 #include <boost/shared_ptr.hpp>
+#include <metasim/core/holder.hpp>
 
 namespace metasim 
 {
@@ -48,12 +50,14 @@ enum reflective_type
     TYPE_DOUBLE,
 
     TYPE_STRING,
+    TYPE_WCHAR,
     TYPE_WSTRING,
     TYPE_STRUCT,
     TYPE_ARRAY,
     TYPE_UNION,
     TYPE_MAP,
-    TYPE_SEQUENCE
+    TYPE_VECTOR,
+    TYPE_LIST
 };
 
 struct reflective_base

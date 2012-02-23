@@ -31,7 +31,18 @@
 #include <boost/type_traits.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/lamda.hpp>
+#include <boost/mpl/lambda.hpp>
+#include <boost/mpl/at.hpp>
+#include <boost/mpl/for_each.hpp> // run-time foreach
+#include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/range_c.hpp>
+
+#include <boost/fusion/sequence/intrinsic.hpp>
+
+#include <boost/fusion/mpl.hpp>
+#include <boost/fusion/adapted.hpp> // BOOST_FUSION_ADAPT_STRUCT
+
+#include <metasim/core/adapted.hpp>
 
 namespace metasim 
 {
@@ -121,6 +132,39 @@ struct std_string_reflective : public reflective_base
     void copy(holder const& src, holder& dst) const;
 };
 
+template< typename T >
+struct std_vector_reflective : public reflective_base
+{
+    typedef typename T::value_type slice_t;
+    // typedef reflective < slice_t > slice_reflective_t;
+
+    std_vector_reflective(reflective_base const * parent = NULL,
+            unsigned int idx = 0);
+    
+    ~std_vector_reflective();
+
+    bool is_repeated() const;
+    bool is_variable_length() const;
+    
+    reflective_type get_type() const;
+
+    reflective_base const * get_slice() const;
+
+    // Dynamic information
+    holder create_holder() const;
+
+    unsigned int get_length(holder const& value) const;
+
+    void set_length(holder& value, unsigned int length) const;
+
+    holder get_child_value(holder& value, 
+        unsigned int idx) const;
+
+    void copy(holder const& src, holder& dst) const;
+
+    reflective_base const * m_slice;
+};
+
 typedef std::vector< reflective_ptr > reflective_children;
 
 struct accessor_base
@@ -197,10 +241,10 @@ struct unsupported_type : public reflective_base
 /**
  * @brief Calculates the reflective type for a type Y based on a type T.
  *
- * @tparam T A basic CORBA type.
+ * @tparam T A basic C++ type.
  * @tparam Y Must have the same basic usage than T.
  */
-template< typename T, typename Y = T, typename Entry = reflective< _1 > >
+template< typename T, typename Y = T>
 struct calculate_reflective
 {
     typedef typename 
@@ -212,28 +256,34 @@ struct calculate_reflective
             boost::mpl::identity< enum_reflective< Y > >,
         // else if
         boost::mpl::eval_if< boost::is_class< T >, 
-            boost::mpl::identity< struct_reflective< Y, Entry > >,
+            boost::mpl::identity< struct_reflective< Y > >,
         // else
             boost::mpl::identity< unsupported_type< Y > >
         > > >::type type;
 };
 
-template< typename Y, typename Entry >
-struct calculate_reflective< bool, Y, Entry >
+template< typename Y >
+struct calculate_reflective< bool, Y >
 {
     typedef bool_reflective< Y > type;
 };
 
-template< typename T, typename Y, unsigned int N, typename Entry >
-struct calculate_reflective< T[N], Y, typename Entry >
+template< typename T, typename Y, unsigned int N >
+struct calculate_reflective< T[N], Y >
 {
-    typedef array_reflective< Y, Entry > type;
+    typedef array_reflective< Y > type;
 };
 
-template< typename Y, typename Entry >
-struct calculate_reflective< std::string, Y, Entry >
+template< typename Y >
+struct calculate_reflective< std::string, Y >
 {
     typedef std_string_reflective< Y > type;
+};
+
+template< typename T, typename Y >
+struct calculate_reflective< std::vector< T >, Y >
+{
+    typedef std_vector_reflective< Y > type;
 };
 
 } // namespace detail

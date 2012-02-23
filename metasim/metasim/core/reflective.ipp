@@ -163,9 +163,7 @@ reflective_type std_string_reflective< T >::get_type() const
 template< typename T >
 holder std_string_reflective< T >::create_holder() const
 {
-    // Note: you can not use this method for slice member 
-    // of a sequence.
-    return new holder_ref_impl< orbimpl::String_Manager >();
+    return new holder_ref_impl< T >();
 }
 
 template< typename T >
@@ -210,10 +208,12 @@ struct create_iterator
     void operator()(N const& nn)
     {
         // Tipo del campo actual
-        typedef typename cs_mpl::type_of_member< S, N >::type current_t;
+        typedef typename boost::fusion::result_of::value_at< S, N >::type 
+			current_t;
 
         // Tipo que contiene el nombre del campo actual
-        typedef cs_mpl::name_of_member< S, N > name_t;
+        typedef boost::fusion::extension::struct_member_name< S, N::value > 
+			name_t;
 
         typedef reflective< current_t > reflective_t;
 
