@@ -133,7 +133,7 @@ struct reflective;
 struct reflective_group_base
 {
     reflective_group_base();
-    ~reflective_group_base();
+    virtual ~reflective_group_base();
 
     unsigned int get_reflective_count() const;
     reflective_base const * get_reflective_by_name(
