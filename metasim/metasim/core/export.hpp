@@ -20,8 +20,14 @@
 #ifndef METASIM_CORE_EXPORT_HPP
 #define METASIM_CORE_EXPORT_HPP
 
-#if defined(metasim_EXPORTS) && defined(_MSC_VER)
-    #define METASIM_EXPORT __declspec(dllexport)
+#if defined(_MSC_VER)
+
+    #if defined(metasim_EXPORTS)
+        #define METASIM_EXPORT __declspec(dllexport)
+    #else
+        #define METASIM_EXPORT __declspec(dllimport)
+    #endif
+
 #else
     #define METASIM_EXPORT 
 #endif
