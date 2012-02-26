@@ -31,14 +31,14 @@ namespace core
 
 struct holder;
 
-struct METASIM_EXPORT holder_impl_base {};
+struct METASIM_CORE_DECLSPEC holder_impl_base {};
 
 typedef boost::shared_ptr< holder_impl_base > holder_impl_ptr;
 
 template< typename T >
 struct holder_ref_impl;
 
-struct METASIM_EXPORT holder
+struct METASIM_CORE_DECLSPEC holder
 {
     holder();
 

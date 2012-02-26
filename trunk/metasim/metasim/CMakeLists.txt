@@ -1,5 +1,3 @@
-add_definitions(-Dmetasim_EXPORTS)
-
 #
 # CORE LIBRARY
 #
