@@ -239,4 +239,23 @@ reflective_group_base::get_reflective_by_tag(
 
     return NULL;
 }
+instance_base::instance_base(const std::string& name,
+        reflective_group_base const * reflective) :
+    m_name(name), m_reflective(reflective)
+{
+}
+
+instance_base::~instance_base()
+{
+}
+
+const std::string& instance_base::get_name() const
+{
+    return m_name;
+}
+
+reflective_group_base const * instance_base::get_reflective() const
+{
+    return m_reflective;
+}
 

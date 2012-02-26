@@ -167,6 +167,21 @@ protected:
     reflectives_by_tag_t m_reflectives_by_tag;
 };
 
+struct instance_base
+{
+    instance_base(const std::string& name,
+            reflective_group_base const * reflective);
+    virtual ~instance_base();
+
+    const std::string& get_name() const;
+    reflective_group_base const * get_reflective() const;
+
+protected:
+
+    const std::string m_name;
+    reflective_group_base const * m_reflective;
+};
+
 } // namespace core
 } // namespace metasim
 

@@ -24,15 +24,13 @@
 
 #include <iostream>
 #include <sstream>
-//#include <metasim/json/reflective.hpp>
+#include <metasim/json/reflective.hpp>
 
 using namespace metasim::gui;
 
-namespace 
-{
-
 // should be a singleton instance of a factory
-QWidget * createWidget(metasim::core::reflective_base const * reflective,
+QWidget * metasim::gui::createWidget(
+        core::reflective_base const * reflective,
         QWidget * parent)
 {
     using namespace metasim::core;
@@ -97,8 +95,6 @@ QWidget * createWidget(metasim::core::reflective_base const * reflective,
 
     return new QLabel("Unsupported item!", parent);
 }
-
-} // namespace
 
 ReflectiveWidgetBase::ReflectiveWidgetBase(
         core::reflective_base const * reflective) :

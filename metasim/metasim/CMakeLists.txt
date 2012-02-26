@@ -1,12 +1,45 @@
 #
 # CORE LIBRARY
 #
+
+set(metasim_core_EXPORTED_HEADERS
+    core/adapted.hpp
+    core/holder.hpp
+    core/reflective_fwd.hpp
+    core/reflective.hpp
+    core/reflective.ipp
+    core/reflective_primitive.ipp
+
+    json/converter.hpp
+    json/helper.hpp
+    json/parser.hpp
+    json/reflective.cpp
+    json/reflective.hpp
+    json/writer.hpp
+    json/detail/base64_blob.hpp
+    json/detail/json.hpp
+    json/detail/json_parse.hpp
+    json/detail/json_writer.hpp
+)
+
+foreach(_header ${metasim_core_EXPORTED_HEADERS})
+    get_filename_component(_header_path ${_header} PATH)
+    install(FILES ${_header}
+        DESTINATION include/metasim/${_header_path})
+endforeach(_header ${metasim_core_EXPORTED_HEADERS})
+
 set(metasim_core_SRCS 
     json/reflective.cpp
     json/detail/modp_b64.c
     core/reflective.cpp)
 
 add_library(metasim_core SHARED ${metasim_core_SRCS})
+
+set_target_properties(metasim_core PROPERTIES 
+    VERSION ${${PROJECT_NAME}_VERSION} 
+    SOVERSION ${${PROJECT_NAME}_MAJOR_VERSION})
+
+install(TARGETS metasim_core DESTINATION lib)
 
 #
 # GUI LIBRARY

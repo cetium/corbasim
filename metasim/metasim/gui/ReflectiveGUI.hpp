@@ -29,6 +29,17 @@ namespace metasim
 namespace gui 
 {
 
+/**
+ * @brief Creates a widget for a reflective type. 
+ *
+ * @param reflective The reflective type.
+ * @param parent The parent widget.
+ *
+ * @return A new widget. 
+ */
+QWidget * createWidget(core::reflective_base const * reflective, 
+        QWidget * parent);
+
 class ReflectiveWidgetBase
 {
 protected:
