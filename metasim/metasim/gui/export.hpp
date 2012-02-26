@@ -17,20 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef METASIM_CORE_EXPORT_HPP
-#define METASIM_CORE_EXPORT_HPP
+#ifndef METASIM_GUI_EXPORT_HPP
+#define METASIM_GUI_EXPORT_HPP
 
 #if defined(_MSC_VER)
 
-    #if defined(metasim_core_EXPORTS)
-        #define METASIM_CORE_DECLSPEC __declspec(dllexport)
+    #if defined(metasim_gui_EXPORTS)
+        #define METASIM_GUI_DECLSPEC __declspec(dllexport)
     #else
-        #define METASIM_CORE_DECLSPEC __declspec(dllimport)
+        #define METASIM_GUI_DECLSPEC __declspec(dllimport)
     #endif
 
 #else
-    #define METASIM_CORE_DECLSPEC 
+    #define METASIM_GUI_DECLSPEC 
 #endif
 
-#endif /* METASIM_CORE_EXPORT_HPP */
+#endif /* METASIM_GUI_EXPORT_HPP */
 

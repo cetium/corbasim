@@ -22,6 +22,7 @@
 
 #include <QAbstractItemModel>
 
+#include <metasim/gui/export.hpp>
 #include <metasim/core/reflective_fwd.hpp>
 #include <metasim/gui/types.hpp>
 #include <metasim/gui/ModelNode.hpp>
@@ -31,7 +32,7 @@ namespace metasim
 namespace gui
 {
 
-class DataModel : public QAbstractItemModel
+class METASIM_GUI_DECLSPEC DataModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:

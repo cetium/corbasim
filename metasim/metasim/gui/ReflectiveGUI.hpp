@@ -20,6 +20,8 @@
 #ifndef METASIM_GUI_REFLECTIVEGUI_HPP
 #define METASIM_GUI_REFLECTIVEGUI_HPP
 
+#include <metasim/gui/export.hpp>
+
 #include <QtGui>
 #include <metasim/core/reflective_fwd.hpp>
 //#include <metasim/qt/MultiFileSelectionWidget.hpp>
@@ -37,10 +39,11 @@ namespace gui
  *
  * @return A new widget. 
  */
-QWidget * createWidget(core::reflective_base const * reflective, 
+QWidget * METASIM_GUI_DECLSPEC createWidget(
+        core::reflective_base const * reflective, 
         QWidget * parent);
 
-class ReflectiveWidgetBase
+class METASIM_GUI_DECLSPEC ReflectiveWidgetBase
 {
 protected:
 
@@ -60,7 +63,8 @@ protected:
     core::reflective_base const * m_reflective;
 };
 
-class AlternativesWidget : public QWidget, public ReflectiveWidgetBase
+class METASIM_GUI_DECLSPEC AlternativesWidget : 
+    public QWidget, public ReflectiveWidgetBase
 {
     Q_OBJECT
 public:
@@ -88,7 +92,8 @@ protected:
     std::vector< ReflectiveWidgetBase * > m_widgets;
 };
 
-class FloatWidget : public QDoubleSpinBox, public ReflectiveWidgetBase
+class METASIM_GUI_DECLSPEC FloatWidget : 
+    public QDoubleSpinBox, public ReflectiveWidgetBase
 {
     Q_OBJECT
 public:
@@ -100,7 +105,8 @@ public:
     virtual void fromHolder(core::holder& holder);
 };
 
-class IntegerWidget : public QSpinBox, public ReflectiveWidgetBase
+class METASIM_GUI_DECLSPEC IntegerWidget : 
+    public QSpinBox, public ReflectiveWidgetBase
 {
     Q_OBJECT
 public:
@@ -112,7 +118,8 @@ public:
     virtual void fromHolder(core::holder& holder);
 };
 
-class StringWidget : public QLineEdit, public ReflectiveWidgetBase
+class METASIM_GUI_DECLSPEC StringWidget : 
+    public QLineEdit, public ReflectiveWidgetBase
 {
     Q_OBJECT
 public:
@@ -124,7 +131,8 @@ public:
     virtual void fromHolder(core::holder& holder);
 };
 
-class EnumWidget : public QComboBox, public ReflectiveWidgetBase
+class METASIM_GUI_DECLSPEC EnumWidget : 
+    public QComboBox, public ReflectiveWidgetBase
 {
     Q_OBJECT
 public:
@@ -136,7 +144,8 @@ public:
     virtual void fromHolder(core::holder& holder);
 };
 
-class BoolWidget : public QCheckBox, public ReflectiveWidgetBase
+class METASIM_GUI_DECLSPEC BoolWidget : 
+    public QCheckBox, public ReflectiveWidgetBase
 {
     Q_OBJECT
 public:
@@ -148,7 +157,8 @@ public:
     virtual void fromHolder(core::holder& holder);
 };
 
-class StructWidget : public QWidget, public ReflectiveWidgetBase
+class METASIM_GUI_DECLSPEC StructWidget : 
+    public QWidget, public ReflectiveWidgetBase
 {
     Q_OBJECT
 public:
@@ -164,7 +174,8 @@ protected:
     std::vector< ReflectiveWidgetBase * > m_widgets;
 };
 
-class SequenceWidget : public QWidget, public ReflectiveWidgetBase
+class METASIM_GUI_DECLSPEC SequenceWidget : 
+    public QWidget, public ReflectiveWidgetBase
 {
     Q_OBJECT
 public:
@@ -194,7 +205,8 @@ protected:
 };
 
 #if 0
-class FilesWidget : public qt::MultiFileSelectionWidget, 
+class METASIM_GUI_DECLSPEC FilesWidget : 
+    public qt::MultiFileSelectionWidget, 
     public ReflectiveWidgetBase
 {
     Q_OBJECT

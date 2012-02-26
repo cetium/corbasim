@@ -78,7 +78,7 @@ enum reflective_type
     TYPE_LIST
 };
 
-struct METASIM_EXPORT reflective_base
+struct METASIM_CORE_DECLSPEC reflective_base
 {
     virtual ~reflective_base();
 
@@ -132,7 +132,7 @@ typedef boost::shared_ptr< reflective_base > reflective_ptr;
 template< typename T >
 struct reflective;
 
-struct METASIM_EXPORT reflective_group_base
+struct METASIM_CORE_DECLSPEC reflective_group_base
 {
     reflective_group_base();
     virtual ~reflective_group_base();
@@ -169,7 +169,7 @@ protected:
     reflectives_by_tag_t m_reflectives_by_tag;
 };
 
-struct METASIM_EXPORT instance_base
+struct METASIM_CORE_DECLSPEC instance_base
 {
     instance_base(const std::string& name,
             reflective_group_base const * reflective);
