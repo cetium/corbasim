@@ -25,8 +25,8 @@ using namespace metasim::json;
 using namespace metasim::core;
 
 reflective_helper::reflective_helper(
-        core::reflective_base const * reflective,
-        core::holder holder) :
+        metasim::core::reflective_base const * reflective,
+        metasim::core::holder holder) :
     m_reflective(reflective), m_holder(holder), m_currentIndex(0)
 {
 }

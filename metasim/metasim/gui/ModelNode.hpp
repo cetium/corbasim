@@ -34,8 +34,8 @@ typedef boost::shared_ptr< Node > Node_ptr;
 
 struct Node
 {
-    core::reflective_base const * reflective;
-    core::holder holder;
+    metasim::core::reflective_base const * reflective;
+    metasim::core::holder holder;
 
     Node const * parent;
     unsigned int index;
@@ -43,8 +43,8 @@ struct Node
     bool initialized;
     std::vector< Node_ptr > children;
 
-    Node(core::reflective_base const * r,
-            core::holder h, Node const * p = 0, 
+    Node(metasim::core::reflective_base const * r,
+            metasim::core::holder h, Node const * p = 0, 
             unsigned int idx = 0);
 
     void initialize();
