@@ -97,7 +97,7 @@ QWidget * metasim::gui::createWidget(
 }
 
 ReflectiveWidgetBase::ReflectiveWidgetBase(
-        core::reflective_base const * reflective) :
+        metasim::core::reflective_base const * reflective) :
     m_reflective(reflective)
 {
 }
@@ -113,7 +113,7 @@ ReflectiveWidgetBase::getReflective() const
 }
 
 AlternativesWidget::AlternativesWidget(
-        core::reflective_base const * reflective,
+        metasim::core::reflective_base const * reflective,
         QWidget * parent) :
     QWidget(parent), ReflectiveWidgetBase(reflective), m_group(this)
 {
@@ -140,13 +140,13 @@ AlternativesWidget::~AlternativesWidget()
 {
 }
 
-void AlternativesWidget::toHolder(core::holder& holder) 
+void AlternativesWidget::toHolder(metasim::core::holder& holder) 
 {
     if (!m_widgets.empty())
         m_widgets[m_stack->currentIndex()]->toHolder(holder);
 }
 
-void AlternativesWidget::fromHolder(core::holder& holder)
+void AlternativesWidget::fromHolder(metasim::core::holder& holder)
 {
     for (unsigned int i = 0; i < m_widgets.size(); i++) 
     {
@@ -181,7 +181,7 @@ void AlternativesWidget::changeWidget(int idx)
     m_stack->setCurrentIndex(idx);
 }
 
-FloatWidget::FloatWidget(core::reflective_base const * reflective,
+FloatWidget::FloatWidget(metasim::core::reflective_base const * reflective,
         QWidget * parent) :
     QDoubleSpinBox(parent), ReflectiveWidgetBase(reflective)
 {
@@ -208,7 +208,7 @@ FloatWidget::~FloatWidget()
 {
 }
 
-void FloatWidget::toHolder(core::holder& holder) 
+void FloatWidget::toHolder(metasim::core::holder& holder) 
 {
     using namespace metasim::core;
 
@@ -229,7 +229,7 @@ void FloatWidget::toHolder(core::holder& holder)
     }
 }
 
-void FloatWidget::fromHolder(core::holder& holder)
+void FloatWidget::fromHolder(metasim::core::holder& holder)
 {
     using namespace metasim::core;
 
@@ -248,7 +248,7 @@ void FloatWidget::fromHolder(core::holder& holder)
     }
 }
 
-IntegerWidget::IntegerWidget(core::reflective_base const * reflective,
+IntegerWidget::IntegerWidget(metasim::core::reflective_base const * reflective,
         QWidget * parent) :
     QSpinBox(parent), ReflectiveWidgetBase(reflective)
 {
@@ -300,7 +300,7 @@ IntegerWidget::~IntegerWidget()
 {
 }
 
-void IntegerWidget::toHolder(core::holder& holder) 
+void IntegerWidget::toHolder(metasim::core::holder& holder) 
 {
     using namespace metasim::core;
 
@@ -339,7 +339,7 @@ void IntegerWidget::toHolder(core::holder& holder)
     }
 }
 
-void IntegerWidget::fromHolder(core::holder& holder)
+void IntegerWidget::fromHolder(metasim::core::holder& holder)
 {
     using namespace metasim::core;
 
@@ -376,7 +376,7 @@ void IntegerWidget::fromHolder(core::holder& holder)
     }
 }
 
-StringWidget::StringWidget(core::reflective_base const * reflective,
+StringWidget::StringWidget(metasim::core::reflective_base const * reflective,
         QWidget * parent) :
     QLineEdit(parent), ReflectiveWidgetBase(reflective)
 {
@@ -386,18 +386,18 @@ StringWidget::~StringWidget()
 {
 }
 
-void StringWidget::toHolder(core::holder& holder)
+void StringWidget::toHolder(metasim::core::holder& holder)
 {
     m_reflective->from_string(holder, text().toStdString());
 }
 
-void StringWidget::fromHolder(core::holder& holder)
+void StringWidget::fromHolder(metasim::core::holder& holder)
 {
     std::string str(m_reflective->to_string(holder));
     setText(str.c_str());
 }
 
-EnumWidget::EnumWidget(core::reflective_base const * reflective,
+EnumWidget::EnumWidget(metasim::core::reflective_base const * reflective,
         QWidget * parent) :
     QComboBox(parent), ReflectiveWidgetBase(reflective)
 {
@@ -415,12 +415,12 @@ EnumWidget::~EnumWidget()
 {
 }
 
-void EnumWidget::toHolder(core::holder& holder) 
+void EnumWidget::toHolder(metasim::core::holder& holder) 
 {
     holder.to_value< int32_t >() = currentIndex();
 }
 
-void EnumWidget::fromHolder(core::holder& holder)
+void EnumWidget::fromHolder(metasim::core::holder& holder)
 {
     int idx = holder.to_value< int32_t >();
 
@@ -430,7 +430,7 @@ void EnumWidget::fromHolder(core::holder& holder)
     }
 }
 
-BoolWidget::BoolWidget(core::reflective_base const * reflective,
+BoolWidget::BoolWidget(metasim::core::reflective_base const * reflective,
         QWidget * parent) :
     QCheckBox(parent), ReflectiveWidgetBase(reflective)
 {
@@ -440,7 +440,7 @@ BoolWidget::~BoolWidget()
 {
 }
 
-void BoolWidget::toHolder(core::holder& holder) 
+void BoolWidget::toHolder(metasim::core::holder& holder) 
 {
     using namespace metasim::core;
 
@@ -456,7 +456,7 @@ void BoolWidget::toHolder(core::holder& holder)
     }
 }
 
-void BoolWidget::fromHolder(core::holder& holder)
+void BoolWidget::fromHolder(metasim::core::holder& holder)
 {
     using namespace metasim::core;
 
@@ -472,7 +472,7 @@ void BoolWidget::fromHolder(core::holder& holder)
     }
 }
 
-StructWidget::StructWidget(core::reflective_base const * reflective,
+StructWidget::StructWidget(metasim::core::reflective_base const * reflective,
         QWidget * parent) :
     QWidget(parent), ReflectiveWidgetBase(reflective)
 {
@@ -528,7 +528,7 @@ StructWidget::~StructWidget()
 {
 }
 
-void StructWidget::toHolder(core::holder& holder) 
+void StructWidget::toHolder(metasim::core::holder& holder) 
 {
     const unsigned int count = m_reflective->get_children_count();
 
@@ -543,7 +543,7 @@ void StructWidget::toHolder(core::holder& holder)
     }
 }
 
-void StructWidget::fromHolder(core::holder& holder)
+void StructWidget::fromHolder(metasim::core::holder& holder)
 {
     const unsigned int count = m_reflective->get_children_count();
 
@@ -558,7 +558,7 @@ void StructWidget::fromHolder(core::holder& holder)
     }
 }
 
-SequenceWidget::SequenceWidget(core::reflective_base const * reflective,
+SequenceWidget::SequenceWidget(metasim::core::reflective_base const * reflective,
         QWidget * parent) :
     QWidget(parent), ReflectiveWidgetBase(reflective), m_old_idx(-1),
     m_sbLength(NULL), m_sbCurrentIndex(NULL)
@@ -622,7 +622,7 @@ SequenceWidget::~SequenceWidget()
 {
 }
 
-void SequenceWidget::toHolder(core::holder& holder)
+void SequenceWidget::toHolder(metasim::core::holder& holder)
 {
     // store current value
     if (m_reflective->get_length(m_holder) > 0)
@@ -635,7 +635,7 @@ void SequenceWidget::toHolder(core::holder& holder)
     m_reflective->copy(m_holder, holder);
 }
 
-void SequenceWidget::fromHolder(core::holder& holder)
+void SequenceWidget::fromHolder(metasim::core::holder& holder)
 {
     m_reflective->copy(holder, m_holder);
 
@@ -695,7 +695,7 @@ void SequenceWidget::indexChanged(int idx)
 
 // Files
 #if 0
-FilesWidget::FilesWidget(core::reflective_base const * reflective,
+FilesWidget::FilesWidget(metasim::core::reflective_base const * reflective,
         QWidget * parent) :
     qt::MultiFileSelectionWidget(parent), 
     ReflectiveWidgetBase(reflective)
@@ -706,11 +706,11 @@ FilesWidget::~FilesWidget()
 {
 }
 
-void FilesWidget::toHolder(core::holder& holder) 
+void FilesWidget::toHolder(metasim::core::holder& holder) 
 {
 }
 
-void FilesWidget::fromHolder(core::holder& holder)
+void FilesWidget::fromHolder(metasim::core::holder& holder)
 {
 }
 #endif

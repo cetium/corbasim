@@ -21,8 +21,8 @@
 
 using namespace metasim::gui;
 
-Node::Node(core::reflective_base const * r,
-        core::holder h, Node const * p, unsigned int idx) :
+Node::Node(metasim::core::reflective_base const * r,
+        metasim::core::holder h, Node const * p, unsigned int idx) :
     reflective(r), holder(h), parent(p), index(idx), initialized(false)
 {
 }
@@ -34,7 +34,7 @@ void Node::initialize()
         const unsigned int count = reflective->get_length(holder);
         children.reserve(count);
 
-        core::reflective_base const * slice =
+        metasim::core::reflective_base const * slice =
             reflective->get_slice();
 
         for (unsigned int i = 0; i < count; i++) 
