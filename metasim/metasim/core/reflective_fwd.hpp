@@ -20,6 +20,8 @@
 #ifndef METASIM_CORE_REFLECTIVE_FWD_HPP
 #define METASIM_CORE_REFLECTIVE_FWD_HPP
 
+#include <metasim/core/export.hpp>
+
 #include <string>
 #include <vector>
 #include <map>
@@ -76,7 +78,7 @@ enum reflective_type
     TYPE_LIST
 };
 
-struct reflective_base
+struct METASIM_EXPORT reflective_base
 {
     virtual ~reflective_base();
 
@@ -130,7 +132,7 @@ typedef boost::shared_ptr< reflective_base > reflective_ptr;
 template< typename T >
 struct reflective;
 
-struct reflective_group_base
+struct METASIM_EXPORT reflective_group_base
 {
     reflective_group_base();
     virtual ~reflective_group_base();
@@ -167,7 +169,7 @@ protected:
     reflectives_by_tag_t m_reflectives_by_tag;
 };
 
-struct instance_base
+struct METASIM_EXPORT instance_base
 {
     instance_base(const std::string& name,
             reflective_group_base const * reflective);

@@ -20,6 +20,8 @@
 #ifndef METASIM_HOLDER_HPP
 #define METASIM_HOLDER_HPP
 
+#include <metasim/core/export.hpp>
+
 #include <boost/shared_ptr.hpp>
 
 namespace metasim 
@@ -36,7 +38,7 @@ typedef boost::shared_ptr< holder_impl_base > holder_impl_ptr;
 template< typename T >
 struct holder_ref_impl;
 
-struct holder
+struct METASIM_EXPORT holder
 {
     holder();
 
