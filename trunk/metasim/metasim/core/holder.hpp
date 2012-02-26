@@ -31,7 +31,7 @@ namespace core
 
 struct holder;
 
-struct holder_impl_base {};
+struct METASIM_EXPORT holder_impl_base {};
 
 typedef boost::shared_ptr< holder_impl_base > holder_impl_ptr;
 
