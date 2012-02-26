@@ -1,14 +1,22 @@
+add_definitions(-Dmetasim_EXPORTS)
+
 #
 # CORE LIBRARY
 #
 
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/core/version.hpp.in" 
+    "${CMAKE_CURRENT_SOURCE_DIR}/core/version.hpp" IMMEDIATE @ONLY)
+
 set(metasim_core_EXPORTED_HEADERS
     core/adapted.hpp
     core/holder.hpp
+    core/export.hpp
     core/reflective_fwd.hpp
     core/reflective.hpp
     core/reflective.ipp
     core/reflective_primitive.ipp
+
+    core/version.hpp
 
     json/converter.hpp
     json/helper.hpp
