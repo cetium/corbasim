@@ -167,7 +167,7 @@ struct std_vector_reflective : public reflective_base
 
 typedef std::vector< reflective_ptr > reflective_children;
 
-struct accessor_base
+struct METASIM_CORE_DECLSPEC accessor_base
 {
     virtual holder get(holder& parent) const = 0;
     virtual ~accessor_base();

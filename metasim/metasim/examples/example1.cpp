@@ -6,11 +6,11 @@
 
 struct MyStruct
 {
-    int a;
+    int32_t a;
     std::string str;
 };
 
-BOOST_FUSION_ADAPT_STRUCT(MyStruct, (int, a) (std::string, str))
+BOOST_FUSION_ADAPT_STRUCT(MyStruct, (int32_t, a) (std::string, str))
 
 int main(int argc, char **argv)
 {

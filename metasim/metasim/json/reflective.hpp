@@ -21,6 +21,7 @@
 #define METASIM_JSON_REFLECTIVE_HPP
 
 #include <ostream>
+#include <metasim/core/export.hpp>
 #include <metasim/core/reflective_fwd.hpp>
 #include <metasim/json/helper.hpp>
 #include <metasim/json/writer.hpp>
@@ -59,14 +60,15 @@ struct reflective_helper : public helper::helper_base
 typedef csu::metasim::json::writer::json_writer< std::ostream > 
     std_writer_t;
 
-void write(std_writer_t& w, 
+METASIM_CORE_DECLSPEC void write(std_writer_t& w, 
         metasim::core::reflective_base const * reflective, 
         metasim::core::holder holder);
 
-bool parse(core::reflective_base const * reflective, 
+METASIM_CORE_DECLSPEC bool parse(core::reflective_base const * reflective, 
         core::holder& holder, const char * str, size_t size);
 
-void write(std::ostream& os, core::reflective_base const * reflective, 
+METASIM_CORE_DECLSPEC void write(std::ostream& os, 
+		core::reflective_base const * reflective, 
         const core::holder& holder, bool indent = false);
 
 } // namespace json
