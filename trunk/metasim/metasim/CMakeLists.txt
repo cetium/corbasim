@@ -92,3 +92,8 @@ set_target_properties(metasim_gui PROPERTIES
 
 install(TARGETS metasim_gui DESTINATION lib)
 
+#
+# EXAMPLES AND TESTS
+#
+add_subdirectory(examples EXCLUDE_FROM_ALL)
+
