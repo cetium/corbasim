@@ -30,7 +30,7 @@ using namespace metasim::gui;
 
 // should be a singleton instance of a factory
 QWidget * metasim::gui::createWidget(
-        core::reflective_base const * reflective,
+        metasim::core::reflective_base const * reflective,
         QWidget * parent)
 {
     using namespace metasim::core;

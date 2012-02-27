@@ -26,34 +26,34 @@ namespace metasim
 namespace core 
 {
 
-template bool& holder::to_value< bool >();
-template short& holder::to_value< short >();
-template unsigned short& holder::to_value< unsigned short >();
-template char& holder::to_value< char >();
-template unsigned char& holder::to_value< unsigned char >();
-template int32_t& holder::to_value< int32_t >();
-template uint32_t& holder::to_value< uint32_t >();
-template uint64_t& holder::to_value< uint64_t >();
-template int64_t& holder::to_value< int64_t >();
-template float& holder::to_value< float >();
-template double& holder::to_value< double >();
-template std::string& holder::to_value< std::string >();
+template METASIM_CORE_DECLSPEC bool& holder::to_value< bool >();
+template METASIM_CORE_DECLSPEC short& holder::to_value< short >();
+template METASIM_CORE_DECLSPEC unsigned short& holder::to_value< unsigned short >();
+template METASIM_CORE_DECLSPEC char& holder::to_value< char >();
+template METASIM_CORE_DECLSPEC unsigned char& holder::to_value< unsigned char >();
+template METASIM_CORE_DECLSPEC int32_t& holder::to_value< int32_t >();
+template METASIM_CORE_DECLSPEC uint32_t& holder::to_value< uint32_t >();
+template METASIM_CORE_DECLSPEC uint64_t& holder::to_value< uint64_t >();
+template METASIM_CORE_DECLSPEC int64_t& holder::to_value< int64_t >();
+template METASIM_CORE_DECLSPEC float& holder::to_value< float >();
+template METASIM_CORE_DECLSPEC double& holder::to_value< double >();
+template METASIM_CORE_DECLSPEC std::string& holder::to_value< std::string >();
 
 namespace detail 
 {
 
-template class bool_reflective< bool >;
-template class primitive_reflective< short >;
-template class primitive_reflective< unsigned short >;
-template class primitive_reflective< char >;
-template class primitive_reflective< unsigned char >;
-template class primitive_reflective< int32_t >;
-template class primitive_reflective< uint32_t >;
-template class primitive_reflective< uint64_t >;
-template class primitive_reflective< int64_t >;
-template class primitive_reflective< float >;
-template class primitive_reflective< double >;
-template class std_string_reflective< std::string >;
+template class METASIM_CORE_DECLSPEC bool_reflective< bool >;
+template class METASIM_CORE_DECLSPEC primitive_reflective< short >;
+template class METASIM_CORE_DECLSPEC primitive_reflective< unsigned short >;
+template class METASIM_CORE_DECLSPEC primitive_reflective< char >;
+template class METASIM_CORE_DECLSPEC primitive_reflective< unsigned char >;
+template class METASIM_CORE_DECLSPEC primitive_reflective< int32_t >;
+template class METASIM_CORE_DECLSPEC primitive_reflective< uint32_t >;
+template class METASIM_CORE_DECLSPEC primitive_reflective< uint64_t >;
+template class METASIM_CORE_DECLSPEC primitive_reflective< int64_t >;
+template class METASIM_CORE_DECLSPEC primitive_reflective< float >;
+template class METASIM_CORE_DECLSPEC primitive_reflective< double >;
+template class METASIM_CORE_DECLSPEC std_string_reflective< std::string >;
 
 accessor_base::~accessor_base()
 {

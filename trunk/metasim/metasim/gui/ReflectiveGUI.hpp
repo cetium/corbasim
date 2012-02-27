@@ -39,7 +39,7 @@ namespace gui
  *
  * @return A new widget. 
  */
-QWidget * METASIM_GUI_DECLSPEC createWidget(
+METASIM_GUI_DECLSPEC QWidget * createWidget(
         core::reflective_base const * reflective, 
         QWidget * parent);
 

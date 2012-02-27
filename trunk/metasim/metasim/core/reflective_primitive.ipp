@@ -78,61 +78,61 @@ bool primitive_reflective< T >::is_primitive() const
 }
 
 template< >
-reflective_type primitive_reflective< double >::get_type() const
+METASIM_CORE_DECLSPEC reflective_type primitive_reflective< double >::get_type() const
 {
     return TYPE_DOUBLE;
 }
 
 template< >
-reflective_type primitive_reflective< float >::get_type() const
+METASIM_CORE_DECLSPEC reflective_type primitive_reflective< float >::get_type() const
 {
     return TYPE_FLOAT;
 }
 
 template< >
-reflective_type primitive_reflective< char >::get_type() const
+METASIM_CORE_DECLSPEC reflective_type primitive_reflective< char >::get_type() const
 {
     return TYPE_CHAR;
 }
 
 template< >
-reflective_type primitive_reflective< unsigned char >::get_type() const
+METASIM_CORE_DECLSPEC reflective_type primitive_reflective< unsigned char >::get_type() const
 {
     return TYPE_INT8;
 }
 
 template< >
-reflective_type primitive_reflective< short >::get_type() const
+METASIM_CORE_DECLSPEC reflective_type primitive_reflective< short >::get_type() const
 {
     return TYPE_INT16;
 }
 
 template< >
-reflective_type primitive_reflective< unsigned short >::get_type() const
+METASIM_CORE_DECLSPEC reflective_type primitive_reflective< unsigned short >::get_type() const
 {
     return TYPE_UINT16;
 }
 
 template< >
-reflective_type primitive_reflective< uint32_t >::get_type() const
+METASIM_CORE_DECLSPEC reflective_type primitive_reflective< uint32_t >::get_type() const
 {
     return TYPE_UINT32;
 }
 
 template< >
-reflective_type primitive_reflective< int32_t >::get_type() const
+METASIM_CORE_DECLSPEC reflective_type primitive_reflective< int32_t >::get_type() const
 {
     return TYPE_INT32;
 }
 
 template< >
-reflective_type primitive_reflective< uint64_t >::get_type() const
+METASIM_CORE_DECLSPEC reflective_type primitive_reflective< uint64_t >::get_type() const
 {
     return TYPE_UINT64;
 }
 
 template< >
-reflective_type primitive_reflective< int64_t >::get_type() const
+METASIM_CORE_DECLSPEC reflective_type primitive_reflective< int64_t >::get_type() const
 {
     return TYPE_INT64;
 }
