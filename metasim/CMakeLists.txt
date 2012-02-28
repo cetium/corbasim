@@ -20,7 +20,9 @@ endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-add_definitions(-Wall)
+if(UNIX)
+    add_definitions(-Wall)
+endif()
 
 #
 # Dependencies
@@ -65,10 +67,17 @@ endif()
 add_subdirectory(metasim)
 
 # Opciones de empaquetado
-set(CPACK_GENERATOR "TGZ")
 set(CPACK_PACKAGE_VERSION_MAJOR ${${PROJECT_NAME}_MAJOR_VERSION})
 set(CPACK_PACKAGE_VERSION_MINOR ${${PROJECT_NAME}_MINOR_VERSION})
 set(CPACK_PACKAGE_VERSION_PATCH ${${PROJECT_NAME}_PATCH_LEVEL})
-set(CPACK_SOURCE_GENERATOR "TGZ")
+
+if (UNIX)
+    set(CPACK_GENERATOR "TGZ")
+    set(CPACK_SOURCE_GENERATOR "TGZ")
+else()
+    set(CPACK_GENERATOR "ZIP")
+    set(CPACK_SOURCE_GENERATOR "ZIP")
+endif()
+
 include(CPack)
 
