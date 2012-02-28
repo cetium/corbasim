@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * types.hpp
+ * InstanceModel.hpp
  * Copyright (C) Cátedra SAES-UMU 2011 <catedra-saes-umu@listas.um.es>
  *
  * METASIM is free software: you can redistribute it and/or modify it
@@ -17,15 +17,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef METASIM_GUI_TYPES_HPP
-#define METASIM_GUI_TYPES_HPP
+#ifndef METASIM_GUI_INSTANCEMODEL_HPP
+#define METASIM_GUI_INSTANCEMODEL_HPP
 
-#include <QMetaType>
-#include <metasim/core/holder.hpp>
+#include <QObject>
+#include <metasim/gui/export.hpp>
 #include <metasim/core/reflective_fwd.hpp>
 
-Q_DECLARE_METATYPE(metasim::core::holder)
-Q_DECLARE_METATYPE(metasim::core::instance_ptr)
+namespace metasim 
+{
+namespace gui 
+{
 
-#endif /* METASIM_GUI_TYPES_HPP */
+class METASIM_GUI_DECLSPEC InstanceModel : public QObject
+{
+    Q_OBJECT
+public:
+    InstanceModel(QObject * parent = 0);
+    virtual ~InstanceModel();
+
+    const QList< metasim::core::instance_ptr >& getInstances() const;
+
+public slots:
+
+    void addInstance(metasim::core::instance_ptr);
+    void removeInstance(metasim::core::instance_ptr);
+
+signals:
+    
+    void addedInstance(metasim::core::instance_ptr);
+    void removedInstance(metasim::core::instance_ptr);
+
+protected:
+
+    QList< metasim::core::instance_ptr > m_instances;
+};
+
+} // namespace gui
+} // namespace metasim
+
+#endif /* METASIM_GUI_INSTANCEMODEL_HPP */
 
