@@ -136,7 +136,7 @@ template< typename T >
 struct std_vector_reflective : public reflective_base
 {
     typedef typename T::value_type slice_t;
-    // typedef reflective < slice_t > slice_reflective_t;
+    typedef reflective < slice_t > slice_reflective_t;
 
     std_vector_reflective(reflective_base const * parent = NULL,
             unsigned int idx = 0);
@@ -162,7 +162,7 @@ struct std_vector_reflective : public reflective_base
 
     void copy(holder const& src, holder& dst) const;
 
-    reflective_base const * m_slice;
+    const slice_reflective_t m_slice;
 };
 
 typedef std::vector< reflective_ptr > reflective_children;
