@@ -34,21 +34,6 @@ namespace metasim
 namespace core 
 {
 
-/**
- * Tags
- */
-typedef const int * tag_t;
-
-template< typename T >
-struct tag
-{
-    static inline tag_t value()
-    {
-        static const int value_ = 0;
-        return &value_;
-    }
-};
-
 enum reflective_type
 {
     TYPE_INVALID,
