@@ -6,6 +6,8 @@
          http://www.boost.org
    You can find here how to compile them with Microsoft Visual C++ Express 2010: 
      http://stackoverflow.com/questions/2629421/how-to-use-boost-in-visual-studio-2010
+   Or you can use an installer from BoostPro:
+     http://www.boostpro.com/download/
   # Download and install Qt Libraries from:
     http://qt.nokia.com/downloads/
   # If you want Python scripting support you have to install Python for Windows. It is available from: 
