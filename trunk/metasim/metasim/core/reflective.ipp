@@ -121,12 +121,7 @@ template< typename T >
 holder array_reflective< T >::get_child_value(holder& value, 
     unsigned int idx) const
 {
-    typedef holder_ref_impl< T > parent_impl;
-
-    parent_impl * p = reinterpret_cast< parent_impl * >(
-            value.m_impl.get());
-
-    return holder( ::metasim::core::create_holder(p->t_[idx]));
+    return holder( ::metasim::core::create_holder(value.to_value< T >()[idx]));
 }
 
 template< typename T >
@@ -182,6 +177,78 @@ template< typename T >
 void std_string_reflective< T >::copy(holder const& src, holder& dst) const
 {
     dst.to_value< T >() = const_cast< holder& >(src).to_value< T >();
+}
+
+// Sequence reflective
+template< typename T >
+std_vector_reflective< T >::std_vector_reflective(reflective_base const * parent,
+        unsigned int idx) :
+    reflective_base(parent, idx), m_slice(this, 0)
+{
+}
+
+template< typename T >
+std_vector_reflective< T >::~std_vector_reflective()
+{
+}
+
+template< typename T >
+bool std_vector_reflective< T >::is_repeated() const        { return true; }
+
+template< typename T >
+bool std_vector_reflective< T >::is_variable_length() const { return true; }
+
+template< typename T >
+reflective_type std_vector_reflective< T >::get_type() const
+{
+    return TYPE_VECTOR;
+}
+
+template< typename T >
+reflective_base const * std_vector_reflective< T >::get_slice() const
+{
+    return &m_slice;
+}
+
+// Dynamic information
+template< typename T >
+holder std_vector_reflective< T >::create_holder() const
+{
+    return new holder_ref_impl< T >();
+}
+
+template< typename T >
+unsigned int std_vector_reflective< T >::get_length(holder const& value) const
+{
+    return const_cast< holder& >(value).to_value< T >().size();
+}
+
+template< typename T >
+void std_vector_reflective< T >::set_length(holder& value, 
+        unsigned int length) const
+{
+    return value.to_value< T >().resize(length);
+}
+
+template< typename T >
+holder std_vector_reflective< T >::get_child_value(holder& value, 
+    unsigned int idx) const
+{
+    return holder( ::metasim::core::create_holder(value.to_value< T >()[idx]));
+}
+
+template< typename T >
+void std_vector_reflective< T >::copy(holder const& src, holder& dst) const
+{
+    unsigned int length = get_length(src);
+    set_length(dst, length);
+
+    for (unsigned i = 0; i < length; i++) 
+    {
+        holder child_src = get_child_value(const_cast< holder& >(src), i);
+        holder child_dst = get_child_value(dst, i);
+        m_slice.copy(child_src, child_dst);
+    }
 }
 
 // Struct reflective

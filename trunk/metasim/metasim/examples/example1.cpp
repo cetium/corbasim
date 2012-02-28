@@ -4,13 +4,25 @@
 #include <metasim/gui/ReflectiveGUI.hpp>
 #include <metasim/core/reflective.ipp>
 
+struct ChildStruct
+{
+    int32_t a;
+    std::string str;
+    std::vector< std::string > vec;
+};
+
+typedef ChildStruct ArrayChildStruct[10];
+
 struct MyStruct
 {
     int32_t a;
     std::string str;
+    ChildStruct ch;
+    ArrayChildStruct ach;
 };
 
-BOOST_FUSION_ADAPT_STRUCT(MyStruct, (int32_t, a) (std::string, str))
+BOOST_FUSION_ADAPT_STRUCT(ChildStruct, (int32_t, a) (std::string, str) (std::vector< std::string >, vec))
+BOOST_FUSION_ADAPT_STRUCT(MyStruct, (int32_t, a) (std::string, str) (ChildStruct, ch) (ArrayChildStruct, ach))
 
 int main(int argc, char **argv)
 {
