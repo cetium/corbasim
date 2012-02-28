@@ -57,6 +57,7 @@ set(metasim_gui_EXPORTED_HEADERS
     gui/qvariant.hpp
     gui/InstanceModel.hpp
     gui/DataModel.hpp
+    gui/MessageModel.hpp
     gui/ReflectiveGUI.hpp)
 
 foreach(_header ${metasim_gui_EXPORTED_HEADERS})
@@ -68,6 +69,7 @@ endforeach(_header ${metasim_gui_EXPORTED_HEADERS})
 set(metasim_gui_MOC_HDRS
     gui/InstanceModel.hpp
     gui/DataModel.hpp
+    gui/MessageModel.hpp
     gui/ReflectiveGUI.hpp)
 
 set(metasim_gui_SRCS
@@ -75,6 +77,7 @@ set(metasim_gui_SRCS
     gui/qvariant.cpp
     gui/InstanceModel.cpp
     gui/DataModel.cpp
+    gui/MessageModel.cpp
     gui/ReflectiveGUI.cpp)
 
 set(metasim_gui_LIBS
