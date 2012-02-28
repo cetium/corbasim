@@ -29,9 +29,28 @@ namespace metasim
 namespace core 
 {
 
+/**
+ * Tags
+ */
+typedef const int * tag_t;
+
+template< typename T >
+struct tag
+{
+    static inline tag_t value()
+    {
+        static const int value_ = 0;
+        return &value_;
+    }
+};
+
 struct holder;
 
-struct METASIM_CORE_DECLSPEC holder_impl_base {};
+struct METASIM_CORE_DECLSPEC holder_impl_base 
+{
+    virtual tag_t get_tag() const = 0;
+    virtual ~holder_impl_base();
+};
 
 typedef boost::shared_ptr< holder_impl_base > holder_impl_ptr;
 
@@ -52,6 +71,8 @@ struct METASIM_CORE_DECLSPEC holder
     holder(const holder& o);
 
     holder& operator=(const holder& o);
+    
+    tag_t get_tag() const;
 
     template< typename Value >
     Value& to_value();

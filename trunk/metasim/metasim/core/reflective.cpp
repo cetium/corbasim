@@ -65,6 +65,10 @@ accessor_base::~accessor_base()
 
 using namespace metasim::core;
 
+holder_impl_base::~holder_impl_base()
+{
+}
+
 // Holder
 holder::holder()
 {
@@ -87,6 +91,12 @@ holder& holder::operator=(const holder& o)
     return *this;
 }
 
+tag_t holder::get_tag() const
+{
+    if (m_impl) return m_impl->get_tag();
+
+    return (tag_t) 0;
+}
 
 // Reflective base
 

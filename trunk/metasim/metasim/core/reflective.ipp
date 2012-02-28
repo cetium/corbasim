@@ -62,6 +62,11 @@ struct holder_ref_impl : public holder_impl_base
     ~holder_ref_impl()
     {
     }
+
+    tag_t get_tag() const
+    {
+        return tag< T >::value();
+    }
 };
 
 template < typename T >
