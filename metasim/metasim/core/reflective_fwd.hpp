@@ -21,11 +21,11 @@
 #define METASIM_CORE_REFLECTIVE_FWD_HPP
 
 #include <metasim/core/export.hpp>
+#include <metasim/core/types.hpp>
 
 #include <string>
 #include <vector>
 #include <map>
-#include <boost/cstdint.hpp>
 #include <boost/shared_ptr.hpp>
 #include <metasim/core/holder.hpp>
 

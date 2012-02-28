@@ -21,13 +21,13 @@
 #define METASIM_CORE_ADAPTED_HPP
 
 #include <metasim/core/reflective_fwd.hpp>
+#include <metasim/core/types.hpp>
 
 #include <string>
 #include <vector>
 #include <list>
 #include <map>
 
-#include <boost/cstdint.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>

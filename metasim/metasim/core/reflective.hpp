@@ -27,7 +27,6 @@
 #include <list>
 #include <map>
 
-#include <boost/cstdint.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/eval_if.hpp>

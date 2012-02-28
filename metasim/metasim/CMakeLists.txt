@@ -9,6 +9,7 @@ set(metasim_core_EXPORTED_HEADERS
     core/adapted.hpp
     core/holder.hpp
     core/export.hpp
+    core/types.hpp
     core/reflective_fwd.hpp
     core/reflective.hpp
     core/reflective.ipp
