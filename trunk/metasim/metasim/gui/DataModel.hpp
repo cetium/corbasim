@@ -71,7 +71,7 @@ public slots:
     void clearModel();
 
     void addEntry(metasim::core::reflective_base const * reflective,
-	metasim::core::holder holder, int pos = -1);
+        metasim::core::holder holder, int pos = -1);
 
 private slots:
 

@@ -184,6 +184,8 @@ protected:
     reflective_group_base const * m_reflective;
 };
 
+typedef boost::shared_ptr< instance_base * > instance_ptr;
+
 } // namespace core
 } // namespace metasim
 

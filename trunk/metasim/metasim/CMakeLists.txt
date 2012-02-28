@@ -54,6 +54,7 @@ install(TARGETS metasim_core DESTINATION lib)
 set(metasim_gui_EXPORTED_HEADERS
     gui/ModelNode.hpp
     gui/qvariant.hpp
+    gui/InstanceModel.hpp
     gui/DataModel.hpp
     gui/ReflectiveGUI.hpp)
 
@@ -64,12 +65,14 @@ foreach(_header ${metasim_gui_EXPORTED_HEADERS})
 endforeach(_header ${metasim_gui_EXPORTED_HEADERS})
 
 set(metasim_gui_MOC_HDRS
+    gui/InstanceModel.hpp
     gui/DataModel.hpp
     gui/ReflectiveGUI.hpp)
 
 set(metasim_gui_SRCS
     gui/ModelNode.cpp
     gui/qvariant.cpp
+    gui/InstanceModel.cpp
     gui/DataModel.cpp
     gui/ReflectiveGUI.cpp)
 
