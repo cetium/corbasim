@@ -1,0 +1,50 @@
+«IMPORT org::csu::idl::idlmm»
+
+«EXTENSION templates::corbasim::corbasim»
+«EXTENSION templates::StructDef»
+
+«DEFINE client FOR TranslationUnit»
+	«EXPAND client FOREACH contains»
+«ENDDEFINE»
+
+«DEFINE client FOR Contained»«ENDDEFINE»
+
+«DEFINE client FOR ModuleDef»
+	«EXPAND client FOREACH contains»
+«ENDDEFINE»
+
+«REM»Cliente para interfaces«ENDREM»
+«DEFINE client FOR InterfaceDef»
+«LET getFQN("_") AS fqn»
+«FILE fqn+"_client_main.cpp"»
+#include <corbasim/impl.hpp>
+#include "«getTranslationUnit().getFileNameStubHpp()»"
+#include <corbasim/qt/client/SimpleClient.hpp>
+
+extern "C" const corbasim::gui::gui_factory_base * corbasim_lib_«fqn»();
+
+int main(int argc, char **argv)
+{
+	QTextCodec::setCodecForCStrings (QTextCodec::codecForLocale());
+	QApplication app(argc, argv);
+
+	CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+	CORBA::Object_var obj;
+	
+	corbasim::qt::client::SimpleClient window;
+	window.initialize(corbasim_lib_«fqn»());
+	
+	if(argc > 1)
+	{
+		obj = orb->string_to_object(argv[1]);
+		
+		window.setReference(obj);
+	}
+	
+	window.show();
+	return app.exec();
+}
+«ENDFILE»
+
+«ENDLET»
+«ENDDEFINE»
