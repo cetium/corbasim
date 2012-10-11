@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.6)
-project(metasim C CXX)
+project(corbasim C CXX)
 
 # Numero de version
 set(${PROJECT_NAME}_MAJOR_VERSION 0)
-set(${PROJECT_NAME}_MINOR_VERSION 1)
-set(${PROJECT_NAME}_PATCH_LEVEL 0)
+set(${PROJECT_NAME}_MINOR_VERSION 2)
+set(${PROJECT_NAME}_PATCH_LEVEL 2)
 set(${PROJECT_NAME}_VERSION
         "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_LEVEL}")
 
@@ -18,11 +18,40 @@ if(NOT DEFINED CMAKE_BUILD_TYPE OR "${CMAKE_BUILD_TYPE}" STREQUAL "")
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH true)
+set(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
+
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-if(UNIX)
-    add_definitions(-Wall)
+if(NOT DEFINED CORBASIM_ORBIMPL)
+    set(CORBASIM_ORBIMPL "TAO")
 endif()
+
+if("${CORBASIM_ORBIMPL}" STREQUAL "TAO")
+    include(check_ace_tao)
+    set(CORBASIM_ORB_LIBS
+        ACE
+        TAO 
+        TAO_PortableServer 
+        TAO_AnyTypeCode 
+        TAO_CosNaming 
+        TAO_ObjRefTemplate)
+    set(CORBASIM_ORB_INCLUDE_DIRS
+        ${ACE_INCLUDE_DIR}
+        ${TAO_INCLUDE_DIR}
+        ${TAO_INCLUDE_DIR}/orbsvcs)
+    set(CORBASIM_ORB_LIBRARY_DIRS
+        ${TAO_LIBRARY_DIR})
+    set(CORBASIM_ORB_IDL_COMPILER tao_idl)
+elseif("${CORBASIM_ORBIMPL}" STREQUAL "OMNIORB4")
+    # TODO check omni
+    set(CORBASIM_ORB_LIBS
+        omniORB4)
+    set(CORBASIM_ORB_IDL_COMPILER omniidl)
+endif()
+
+#add_definitions(-Wall)
+add_definitions(-DCORBASIM_USE_QTSCRIPT)
 
 #
 # Dependencies
@@ -36,6 +65,8 @@ find_package(Boost 1.45.0)
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Boost not found!")
 else(NOT Boost_FOUND)
+    message(STATUS "Boost found!")
+    message(STATUS "Boost library: ${Boost_LIBRARY_DIRS}")
     include_directories(${Boost_INCLUDE_DIRS})
     link_directories(${Boost_LIBRARY_DIRS})
 
@@ -46,7 +77,7 @@ endif(NOT Boost_FOUND)
 find_package(Qt4)
 find_package(Qwt6)
 find_package(Boost 1.45.0 
-    COMPONENTS serialization regex python system thread)
+    COMPONENTS regex system thread program_options)
 
 message(STATUS "Boost libraries: ${Boost_LIBRARIES}")
 
@@ -64,20 +95,28 @@ else()
     message(STATUS "Qwt6 available at: ${Qwt6_INCLUDE_DIR}")
 endif()
 
-add_subdirectory(metasim)
+add_subdirectory(corbasim)
+add_subdirectory(corbasim_idl)
+
+if(QT_FOUND)
+    add_subdirectory(corbasim_app)
+endif()
+
+add_subdirectory(examples EXCLUDE_FROM_ALL)
+add_subdirectory(test EXCLUDE_FROM_ALL)
+
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/private 
+        AND IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/private)
+    add_subdirectory(private EXCLUDE_FROM_ALL)
+endif()
 
 # Opciones de empaquetado
+set(CPACK_GENERATOR "TGZ")
 set(CPACK_PACKAGE_VERSION_MAJOR ${${PROJECT_NAME}_MAJOR_VERSION})
 set(CPACK_PACKAGE_VERSION_MINOR ${${PROJECT_NAME}_MINOR_VERSION})
 set(CPACK_PACKAGE_VERSION_PATCH ${${PROJECT_NAME}_PATCH_LEVEL})
-
-if (UNIX)
-    set(CPACK_GENERATOR "TGZ")
-    set(CPACK_SOURCE_GENERATOR "TGZ")
-else()
-    set(CPACK_GENERATOR "ZIP")
-    set(CPACK_SOURCE_GENERATOR "ZIP")
-endif()
-
+set(CPACK_SOURCE_GENERATOR "TGZ")
+set(CPACK_PACKAGE_FILE_NAME
+    ${PROJECT_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-${CMAKE_SYSTEM_NAME}-${CORBASIM_ORBIMPL}-${CMAKE_BUILD_TYPE})
 include(CPack)
 
